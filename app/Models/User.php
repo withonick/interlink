@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -39,4 +40,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function markOnline()
+    {
+        $this->last_seen_at = Carbon::now();
+        $this->is_online = true;
+        $this->save();
+    }
+    public function markOffline()
+    {
+        $this->last_seen_at = Carbon::now();
+        $this->is_online = false;
+        $this->save();
+    }
+
+    public function hobbies(){
+        return $this->belongsToMany(Hobby::class, 'users_hobbies', 'user_id', 'hobby_id');
+    }
 }

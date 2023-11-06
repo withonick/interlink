@@ -15,11 +15,20 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/', [HomeController::class,'index'])
-    ->name('home');
+Route::get('/', [HomeController::class,'welcome'])
+    ->name('index');
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/home', [HomeController::class,'index'])
+        ->name('home');
+});
+
+
+// Auth routes
 
 Route::get('/register', [RegisterController::class,'create'])
     ->name('register.form');
+
 Route::post('/register', [RegisterController::class,'register'])
     ->name('register');
 
@@ -29,5 +38,5 @@ Route::get('/login', [LoginController::class,'create'])
 Route::post('/login', [LoginController::class,'login'])
     ->name('login');
 
-Route::get('/logout', [LoginController::class,'logout'])
+Route::post('/logout', [LoginController::class,'logout'])
     ->name('logout');
