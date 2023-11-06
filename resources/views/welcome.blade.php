@@ -14,7 +14,7 @@
 
 </head>
 <body>
-<div class="mobile-container text-center">
+<div class="mobile-container text-center" style="margin-top: 70px">
     <div class="logo-wrapper">
         <img src="{{ asset('assets/images/trademark.svg') }}" alt="">
     </div>
@@ -23,7 +23,7 @@
         <h3>Sign up to continue</h3>
 
         <div class="form-group">
-            <a id="with_email" class="btn btn-primary">Continue with email</a>
+            <a href="/login-email" id="with_email" class="btn btn-primary">Continue with email</a>
         </div>
 
         <div class="form-group">

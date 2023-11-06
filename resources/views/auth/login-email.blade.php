@@ -11,12 +11,12 @@
 </head>
 <body>
 <div class="container" style="margin-top: 50px">
-    <form action="{{ route('login') }}" method="post">
+    <form action="{{ route('login.email') }}" method="post">
         @csrf
         @method('post')
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter firstname">
+            <label for="email">Email address</label>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
