@@ -55,11 +55,7 @@ class User extends Authenticatable
     }
 
     public function hobbies(){
-        return $this->belongsToMany(Hobby::class, 'users_hobbies', 'user_id', 'hobby_id');
-    }
-
-    public function gender()
-    {
-        return $this->belongsTo(Gender::class, 'gender_id');
+        return $this->belongsToMany(Hobby::class, 'users_hobbies', 'user_id', 'hobby_id')
+            ->withPivot('description');
     }
 }

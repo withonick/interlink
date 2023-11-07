@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\HobbyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Control\AdminController;
 
 Route::get('/', [HomeController::class,'welcome'])
     ->name('index');
@@ -38,18 +39,25 @@ Route::post('/login-email', [LoginController::class,'loginEmail'])
 Route::post('/logout', [LoginController::class,'logout'])
     ->name('logout');
 
-// Profile
+Route::get('/edit-profile', [RegisterController::class,'editProfile'])
+    ->name('profile.edit');
 
-Route::get('/profile', [UserController::class,'profile'])
-    ->name('profile.form');
-
-Route::put('/profile', [UserController::class,'profileChanges'])
+Route::put('/update-profile', [RegisterController::class,'updateProfile'])
     ->name('profile.update');
 
-// Gender
 
-Route::get('/gender', [UserController::class,'gender'])
-    ->name('gender.form');
+// Hobby routes
 
-Route::put('/gender', [UserController::class,'genderChanges'])
-    ->name('gender.update');
+Route::get('/hobby', [HobbyController::class,'index'])
+    ->name('hobby.index');
+
+Route::get('/hobby/create', [HobbyController::class,'create'])->name('hobby.create');
+
+Route::post('/hobby', [HobbyController::class,'store'])->name('hobby.store');
+
+// Admin routes
+
+Route::middleware(['role:admin'])->group(function(){
+    Route::get('/control', [AdminController::class, 'index'])->name('admin.index');
+});
+

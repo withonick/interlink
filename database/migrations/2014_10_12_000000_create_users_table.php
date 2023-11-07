@@ -30,6 +30,7 @@ return new class extends Migration
             $table->timestamps();
             $table->timestamp('last_seen_at')->nullable();
             $table->boolean('is_online')->default(false);
+            $table->softDeletes();
         });
     }
 

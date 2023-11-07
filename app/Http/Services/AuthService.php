@@ -18,4 +18,10 @@ class AuthService
         Auth::login($user);
         $user->markOnline();
     }
+
+    public function editProfile($validated)
+    {
+        $user = Auth::user();
+        $user->update($validated);
+    }
 }
