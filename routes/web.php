@@ -36,3 +36,11 @@ Route::post('/login-email', [LoginController::class,'loginEmail'])
 
 Route::post('/logout', [LoginController::class,'logout'])
     ->name('logout');
+
+// Profile
+
+Route::get('/profile', [HomeController::class,'profile'])
+    ->name('profile.form');
+
+Route::put('/profile', [HomeController::class,'profileChanges'])
+    ->name('profile.update');

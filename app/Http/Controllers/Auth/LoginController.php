@@ -23,22 +23,22 @@ class LoginController extends Controller
     // login to site logic for user
     public function login(LoginRequest $request){
         if(Auth::check()){
-            return redirect()->intended('/');
+            return redirect()->intended('/profile');
         }
         if (Auth::attempt($request->validated())) {
             Auth::user()->markOnline();
-            return redirect()->intended('/');
+            return redirect()->intended('/profile');
         }
         return back()->withErrors('Incorrect username or password');
     }
 
     public function loginEmail(LoginEmailRequest $request){
         if(Auth::check()){
-            return redirect()->intended('/');
+            return redirect()->intended('/profile');
         }
         if (Auth::attempt($request->validated())) {
             Auth::user()->markOnline();
-            return redirect()->intended('/');
+            return redirect()->intended('/profile');
         }
         return back()->withErrors('Incorrect email or password');
     }
