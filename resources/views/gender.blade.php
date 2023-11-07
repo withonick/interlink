@@ -18,36 +18,26 @@
     <div class="skip-btn">
         <a href="#" style="text-align: right">Skip</a>
     </div>
-    <form action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('gender.update') }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
         <div class="profile_detail_info">
-            <h2>Profile Details</h2>
+            <h2>I am a</h2>
+
 
             <div class="custom-file-input">
-                <input type="file" id="image" name="image">
-            </div>
-
-            <div class="custom-file-input">
-                <label class="col-form-label">Firstname</label>
-                <br>
-                <input type="text" id="firstname" name="firstname" placeholder="Firstname" value="{{ Auth::user()->firstname }}">
-            </div>
-
-            <div class="custom-file-input">
-                <label class="custom-control-label">Lastname</label>
-                <br>
-                <input type="text" id="surname" name="surname" placeholder="Surname" value="{{ Auth::user()->surname }}">
-            </div>
-
-            <div class="custom-file-input">
-                <label class="custom-control-label">Date</label>
-                <br>
-                <input type="date" id="birthday" name="birthday" placeholder="Date" value="{{ Auth::user()->birthday }}">
+                <label class="col-form-label">Gender</label>
+                <select name="gender" class="form-control">
+                    @foreach($genders as $gender)
+                        <option value="{{ $gender->id }}" @if(\Illuminate\Support\Facades\Auth::user()->gender_id === $gender->id) selected @endif>
+                            {{ $gender->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Confirm</button>
+                <button type="submit" class="btn btn-primary">Continue</button>
             </div>
         </div>
     </form>
