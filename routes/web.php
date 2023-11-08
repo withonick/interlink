@@ -8,11 +8,12 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Control\AdminController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\Control\RoleController;
+use App\Http\Controllers\Control\UserController;
 
 Route::get('/', [HomeController::class,'welcome'])
     ->name('index');
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::get('/home', [HomeController::class,'index'])
         ->name('home');
 
@@ -27,8 +28,32 @@ Route::middleware(['auth'])->group(function(){
 Route::get('/register', [RegisterController::class,'create'])
     ->name('register.form');
 
-Route::post('/register', [RegisterController::class,'register'])
-    ->name('register');
+Route::get('/register/email', [RegisterController::class, 'email'])
+    ->name('register.email');
+
+Route::post('/register/email', [RegisterController::class, 'register'])
+    ->name('register.email.store');
+
+Route::get('/register/gender', [RegisterController::class, 'gender'])
+    ->name('register.gender');
+
+Route::post('/register/gender', [RegisterController::class, 'storeGender'])
+    ->name('register.gender.store');
+
+Route::get('/register/hobbies', [RegisterController::class, 'hobbies'])
+    ->name('register.hobbies');
+
+Route::post('/register/hobbies', [RegisterController::class, 'storeHobbies'])
+    ->name('register.hobbies.store');
+
+Route::get('/{user}', [UserController::class, 'show'])
+    ->name('user.show');
+
+Route::get('/{user}/edit', [UserController::class, 'edit'])
+    ->name('user.edit');
+
+Route::post('/{user}', [UserController::class, 'update'])
+    ->name('user.update');
 
 Route::get('/login', [LoginController::class,'create'])
     ->name('login.form');

@@ -20,9 +20,8 @@
         </div>
     </div>
 
-    <form action="{{ route('profile.update') }}" method="post" class="auth-main">
         <h1>Profile detail</h1>
-
+    <form action="{{ route('user.update') }}" method="post" class="auth-main">
         <div class="choice-wrapper">
             @csrf
             @method('PUT')
@@ -33,9 +32,9 @@
             </div>
 
             <div class="profile_detail_info">
-                <input type="text" placeholder="First name" name="firstname" value="{{ \Illuminate\Support\Facades\Auth::user()->firstname }}">
-                <input type="text" placeholder="Last name" name="surname" value="{{ \Illuminate\Support\Facades\Auth::user()->surname }}">
-                <input type="date" onkeypress="return false" value="{{ \Illuminate\Support\Facades\Auth::user()->birthdate }}">
+                <input type="text" placeholder="First name" name="firstname" value="{{ Auth::user()->firstname }}">
+                <input type="text" placeholder="Last name" name="surname" value="{{ Auth::user()->surname }}">
+                <input type="date" onkeypress="return false" name="birthdate" value="{{ Auth::user()->birthdate }}">
             </div>
         </div>
 

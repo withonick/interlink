@@ -21,22 +21,16 @@
     </div>
 
     <div class="auth-main">
-        <h1>Email</h1>
-        <p>Please enter your valid email. We will send you a link to verify your account. </p>
+        <h1>I am a</h1>
 
-        <form action="{{ route('register.email.store') }}" method="post">
+        <form action="{{ route('register.gender.store') }}" method="post">
             @csrf
             @method('post')
             <div class="choice-wrapper">
-                <div class="number-input" style="margin-bottom: 20px">
-                    <i class='bx bxs-user'></i><input type="text" placeholder="Username" name="username">
-                </div>
-                <div class="number-input" style="margin-bottom: 20px">
-                    <i class='bx bxs-envelope'></i><input type="email" placeholder="Email address" name="email">
-                </div>
-                <div class="number-input">
-                    <i class='bx bxs-key' ></i><input type="password" placeholder="Password" name="password">
-                </div>
+                @foreach($genders as $gender)
+                    <input type="radio" style="visibility: hidden;" value="{{ $gender->name }}" id="{{ $gender->name }}" name="gender">
+                    <label for="{{ $gender->name }}">{{ $gender->name }} <i class='bx bx-check'></i></label>
+                @endforeach
             </div>
 
             <div class="continue">

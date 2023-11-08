@@ -21,26 +21,21 @@
     </div>
 
     <div class="auth-main">
-        <h1>Email</h1>
-        <p>Please enter your valid email. We will send you a link to verify your account. </p>
+        <h1>Your interests</h1>
+        <p>Select a few of your interests and let everyone know what you’re passionate about.</p>
 
-        <form action="{{ route('register.email.store') }}" method="post">
+        <form action="{{ route('register.hobbies.store') }}" method="post">
             @csrf
             @method('post')
-            <div class="choice-wrapper">
-                <div class="number-input" style="margin-bottom: 20px">
-                    <i class='bx bxs-user'></i><input type="text" placeholder="Username" name="username">
-                </div>
-                <div class="number-input" style="margin-bottom: 20px">
-                    <i class='bx bxs-envelope'></i><input type="email" placeholder="Email address" name="email">
-                </div>
-                <div class="number-input">
-                    <i class='bx bxs-key' ></i><input type="password" placeholder="Password" name="password">
-                </div>
+            <div class="interest_select">
+                @foreach($hobbies as $hobby)
+                    <input type="checkbox" style="visibility: hidden;" id="{{ $hobby->name }}" value="{{ $hobby->id }}" name="hobbies[]">
+                    <label for="{{ $hobby->name }}">{{ $hobby->name }}</label>
+                @endforeach
             </div>
 
             <div class="continue">
-                <button type="submit" class="btn btn-primary">Continue</button>
+                <button class="btn btn-primary">Continue</button>
             </div>
         </form>
     </div>

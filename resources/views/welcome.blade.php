@@ -14,51 +14,31 @@
 
 </head>
 <body>
-<div class="mobile-container text-center" style="margin-top: 70px">
-    <div class="logo-wrapper">
-        <img src="{{ asset('assets/images/trademark.svg') }}" alt="">
+<div class="mobile-container text-center">
+    <div class="carousel">
+        <img id="slider_1" src="{{ asset('assets/images/carousel-2.jpeg') }}" alt="">
+        <img id="slider_2" src="{{ asset('assets/images/carousel-1.jpeg') }}" alt="">
+        <img id="slider_3" src="{{ asset('assets/images/carousel-3.jpeg') }}" alt="">
     </div>
 
-    <div class="auth-wrapper">
-        <h3>Sign up to continue</h3>
-
-        <div class="form-group">
-            <a href="/login-email" id="with_email" class="btn btn-primary">Continue with email</a>
-        </div>
-
-        <div class="form-group">
-            <a id="with_number" class="btn btn-secondary">Use phone number</a>
-        </div>
-
-        <div class="form-group">
-            <span>Or sign up with</span>
-        </div>
-
-        <div class="social-icons">
-            <a href="#"><i class='bx bxl-facebook-square' style='color:#e94057'  ></i></a>
-            <a href="#"><i class='bx bxl-google' style='color:#e94057' ></i></a>
-            <a href="#"><i class='bx bxl-apple' style='color:#e94057' ></i></a>
-        </div>
-
-
-        <div class="politic-links">
-            <a href="#">Terms of use</a>
-            <a href="#">Privacy Policy</a>
-        </div>
+    <div class="carousel-nav">
+        <a href="#slider_1"></a>
+        <a href="#slider_2"></a>
+        <a href="#slider_3"></a>
     </div>
 
-    <form action="{{ route('logout') }}" method="post">
-        @csrf
-        @method('post')
-        <button>Logout</button>
-    </form>
-
+    <div class="mt-4">
+        <button class="btn btn-primary">Create an account</button>
+    </div>
+    <div class="mt-2">
+        <span>Already have an account ? <a href="{{ route('register') }}">Sign in</a></span>
+    </div>
 </div>
 
 
 
 
-<script src="../js/script.js"></script>
+<script src="{{ asset('js/script.js') }}"></script>
 
 
 </body>
