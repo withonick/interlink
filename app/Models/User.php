@@ -64,8 +64,8 @@ class User extends Authenticatable
         return $this->roles()->pluck('name')->join(', ');
     }
 
-    public static function getUserFullName(){
-        return Auth::user()->firstname . ' ' . Auth::user()->lastname;
+    public function getUserFullName(){
+        return Auth::user()->firstname . ' ' . Auth::user()->surname;
     }
 
     public function tags(){
