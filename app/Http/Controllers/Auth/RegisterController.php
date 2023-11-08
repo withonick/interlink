@@ -19,15 +19,4 @@ class RegisterController extends Controller
 
         return redirect()->route('profile.edit');
     }
-
-    public function editProfile(){
-        return view('auth.profile-edit');
-    }
-
-    public function updateProfile(RegisterRequest $request, AuthService $service){
-        $validatedData = $request->validated();
-        $service->editProfile($validatedData);
-
-        return redirect()->route('index');
-    }
 }

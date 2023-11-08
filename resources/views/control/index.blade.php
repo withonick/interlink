@@ -6,4 +6,6 @@
 
     <h1>Hello world</h1>
 
+    {{ strtoupper(Auth::user()->getRoleNames()) }}
+
 @endsection

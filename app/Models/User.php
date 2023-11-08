@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -57,5 +58,17 @@ class User extends Authenticatable
     public function hobbies(){
         return $this->belongsToMany(Hobby::class, 'users_hobbies', 'user_id', 'hobby_id')
             ->withPivot('description');
+    }
+
+    public function getRoleNames(){
+        return $this->roles()->pluck('name')->join(', ');
+    }
+
+    public static function getUserFullName(){
+        return Auth::user()->firstname . ' ' . Auth::user()->lastname;
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'users_tags', 'user_id', 'tag_id');
     }
 }
