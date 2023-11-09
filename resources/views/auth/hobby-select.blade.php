@@ -16,7 +16,7 @@
         </div>
 
         <div class="skip-btn">
-            <a href="#">Skip</a>
+            <a href="{{ route('user.edit', $user->username) }}">Skip</a>
         </div>
     </div>
 

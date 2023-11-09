@@ -9,6 +9,11 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public function addRole(Request $request)
+    {
+        $role = Role::create(['name' => $request->name]);
+        return redirect()->back();
+    }
     public function editPermissions(Role $role)
     {
         return view('control.roles.edit_permissions', [

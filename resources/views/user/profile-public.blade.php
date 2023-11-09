@@ -8,12 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>{{ $user->username }}</h1>
-
-    <form action="{{ route('logout') }}" method="post">
-        @csrf
-        @method('POST')
-        <button type="submit">Logout</button>
-    </form>
+    <h1>{{ $user->username }}</h1>as
 </body>
 </html>

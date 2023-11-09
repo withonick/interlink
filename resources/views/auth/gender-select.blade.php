@@ -16,7 +16,7 @@
         </div>
 
         <div class="skip-btn">
-            <a href="#">Skip</a>
+            <a href="{{ route('register.hobbies') }}">Skip</a>
         </div>
     </div>
 

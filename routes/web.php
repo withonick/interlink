@@ -9,6 +9,13 @@ use App\Http\Controllers\Control\AdminController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\Control\RoleController;
 use App\Http\Controllers\Control\UserController;
+use App\Http\Controllers\ProfileController;
+
+Route::get('/login', [LoginController::class,'index'])
+    ->name('login.form');
+
+Route::post('/login', [LoginController::class,'login'])
+    ->name('login');
 
 Route::get('/', [HomeController::class,'welcome'])
     ->name('index');
@@ -19,6 +26,16 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
 
     Route::post('/logout', [LoginController::class,'logout'])
         ->name('logout');
+
+    Route::get('/profile/{username}', [ProfileController::class, 'show'])
+        ->name('user.show');
+
+    Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])
+        ->name('user.edit');
+
+    Route::put('/profile/{username}', [ProfileController::class, 'update'])
+        ->name('user.update');
+
 
 });
 
@@ -46,21 +63,6 @@ Route::get('/register/hobbies', [RegisterController::class, 'hobbies'])
 Route::post('/register/hobbies', [RegisterController::class, 'storeHobbies'])
     ->name('register.hobbies.store');
 
-Route::get('/{user}', [UserController::class, 'show'])
-    ->name('user.show');
-
-Route::get('/{user}/edit', [UserController::class, 'edit'])
-    ->name('user.edit');
-
-Route::post('/{user}', [UserController::class, 'update'])
-    ->name('user.update');
-
-Route::get('/login', [LoginController::class,'create'])
-    ->name('login.form');
-
-Route::post('/login', [LoginController::class,'login'])
-    ->name('login');
-
 // Hobby routes
 
 Route::get('/hobby', [HobbyController::class,'index'])
@@ -79,6 +81,7 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
         Route::get('/roles', [AdminController::class, 'roles'])->name('admin.roles');
+        Route::post('/roles', [RoleController::class, 'addRole'])->name('admin.roles.add');
         Route::get('/roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('admin.roles.permissions');
         Route::post('/roles/{role}/permissions', [RoleController::class, 'addPermissions'])->name('admin.roles.permissions.add');
 
@@ -94,4 +97,3 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
         Route::post('/tags', [TagController::class,'store'])->name('admin.tag.store');
     });
 });
-

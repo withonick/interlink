@@ -16,7 +16,7 @@
         </div>
 
         <div class="skip-btn">
-            <a href="#">Skip</a>
+
         </div>
     </div>
 

@@ -1,29 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('assets/styles/global-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/auth/style.css') }}">
+    <link href='{{ asset('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css') }}' rel='stylesheet'>
 </head>
 <body>
-<div class="container" style="margin-top: 50px">
-    <form action="{{ route('login') }}" method="post">
-        @csrf
-        @method('post')
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter firstname">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+<div class="mobile-container">
+    <div class="auth-main">
+        <h1>Welcome back</h1>
+        <p style="font-weight: 500">Please enter your username and password</p>
+
+        <form action="{{ route('login') }}" method="post">
+            @csrf
+            @method('post')
+            <div class="choice-wrapper">
+                <div class="number-input" style="margin-bottom: 20px">
+                    <i class='bx bxs-user'></i><input type="text" placeholder="Username" name="username">
+                </div>
+                <div class="number-input">
+                    <i class='bx bxs-key' ></i><input type="password" placeholder="Password" name="password">
+                </div>
+            </div>
+
+            <div class="continue">
+                <button type="submit" class="btn btn-primary">Continue</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+
+<script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

@@ -8,6 +8,10 @@ enum Permission: string
     case Read = 'Read';
     case Update = 'Update';
     case Delete = 'Delete';
+    case Ban = 'Ban';
+    case Unban = 'Unban';
+
+
 
     public function label(): string
     {
@@ -16,6 +20,8 @@ enum Permission: string
             static::Read => 'Read',
             static::Update => 'Update',
             static::Delete => 'Delete',
+            static::Ban => 'Ban',
+            static::Unban => 'Unban',
         };
     }
 

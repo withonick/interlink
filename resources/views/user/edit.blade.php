@@ -20,21 +20,22 @@
         </div>
     </div>
 
+
+    <form action="{{ route('user.update', $user->username) }}" enctype="multipart/form-data" method="post" class="auth-main">
         <h1>Profile detail</h1>
-    <form action="{{ route('user.update') }}" method="post" class="auth-main">
         <div class="choice-wrapper">
             @csrf
             @method('PUT')
             <div class="profile_img_container">
-                <img src="{{ asset('assets/images/profile.png') }}" alt="">
+                <img src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
                 <i id="image_btn" class='bx bxs-camera' style='color:#ffffff; '  ></i>
-                <input id="image_input" type="file" style="display: none;">
             </div>
 
             <div class="profile_detail_info">
+                <input id="image_input" name="image" type="file" style="display: none;">
                 <input type="text" placeholder="First name" name="firstname" value="{{ Auth::user()->firstname }}">
                 <input type="text" placeholder="Last name" name="surname" value="{{ Auth::user()->surname }}">
-                <input type="date" onkeypress="return false" name="birthdate" value="{{ Auth::user()->birthdate }}">
+                <input type="date" onkeypress="return false" name="birthday" value="{{ Auth::user()->birthday }}">
             </div>
         </div>
 
@@ -45,6 +46,6 @@
 </div>
 
 
-<script src="../js/script.js"></script>
+<script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

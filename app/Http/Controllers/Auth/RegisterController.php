@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
     public function create(){
-        return view('auth.register');
+        return view('auth.register-email');
     }
 
     public function register(EmailUsernameRequest $request, AuthService $service){
@@ -42,13 +42,13 @@ class RegisterController extends Controller
     }
 
     public function hobbies(){
-        return view('auth.hobby-select', ['hobbies' => Hobby::all()]);
+        return view('auth.hobby-select', ['hobbies' => Hobby::all(), 'user' => Auth::user()]);
     }
 
     public function storeHobbies(Request $request){
         $selectedHobbies = $request->input('hobbies');
         Auth::user()->hobbies()->attach($selectedHobbies);
 
-        return redirect()->route('auth.profile');
+        return redirect()->route('user.show', ['username' => Auth::user()->username]);
     }
 }

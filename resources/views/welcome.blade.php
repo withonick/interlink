@@ -28,10 +28,10 @@
     </div>
 
     <div class="mt-4">
-        <button class="btn btn-primary">Create an account</button>
+        <a href="{{ route('register.email') }}" class="btn btn-primary">Create an account</a>
     </div>
-    <div class="mt-2">
-        <span>Already have an account ? <a href="{{ route('register') }}">Sign in</a></span>
+    <div class="mt-4">
+        <span >Already have an account ? <a style="color: #E94057; font-weight: bold" href="{{ route('register.email') }}">Sign in</a></span>
     </div>
 </div>
 
