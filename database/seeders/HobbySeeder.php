@@ -13,6 +13,15 @@ class HobbySeeder extends Seeder
      */
     public function run(): void
     {
-        Hobby::factory()->count(10)->create();
+        Hobby::create(['name' => 'Sport']);
+        Hobby::create(['name' => 'Music']);
+        Hobby::create(['name' => 'Reading']);
+        Hobby::create(['name' => 'Travelling']);
+        Hobby::create(['name' => 'Cooking']);
+        Hobby::create(['name' => 'Dancing']);
+        Hobby::create(['name' => 'Hiking']);
+        Hobby::create(['name' => 'Cycling']);
+        Hobby::create(['name' => 'Fishing']);
+        Hobby::create(['name' => 'Theatre']);
     }
 }

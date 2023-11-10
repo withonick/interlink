@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->date('birthday')->nullable();
             $table->string('gender')->nullable();
-            $table->string('pronouns')->nullable();
+            $table->json('pronouns')->nullable();
             $table->text('bio')->nullable();
             $table->json('socials')->nullable();
             $table->timestamp('email_verified_at')->nullable();

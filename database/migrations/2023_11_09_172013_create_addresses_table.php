@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->morphs('model');
-            $table->foreignId('user_id')->constrained('users');
             $table->string('street');
             $table->string('zip');
             $table->string('city');

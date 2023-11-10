@@ -73,4 +73,22 @@ class User extends Authenticatable implements hasMedia
     public function tags(){
         return $this->belongsToMany(Tag::class, 'users_tags', 'user_id', 'tag_id');
     }
+
+    public function address(){
+        return $this->morphOne(Address::class, 'model');
+    }
+
+    public function getPronounsAttribute($value){
+        return json_decode($value);
+    }
+
+    public function getUserAge(){
+        $birthdate = Carbon::parse($this->birthday);
+
+        $currentDate = Carbon::now();
+
+        $age = $currentDate->diffInYears($birthdate);
+
+        return $age;
+        }
 }

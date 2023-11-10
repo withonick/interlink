@@ -31,7 +31,7 @@
         <a href="{{ route('register.email') }}" class="btn btn-primary">Create an account</a>
     </div>
     <div class="mt-4">
-        <span >Already have an account ? <a style="color: #E94057; font-weight: bold" href="{{ route('register.email') }}">Sign in</a></span>
+        <span >Already have an account ? <a style="color: #E94057; font-weight: bold" href="{{ route('login.form') }}">Sign in</a></span>
     </div>
 </div>
 

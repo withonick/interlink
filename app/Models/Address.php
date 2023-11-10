@@ -18,8 +18,12 @@ class Address extends Model
         'country',
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function model(){
+        return $this->morphTo('model', 'model_type', 'model_id');
+    }
+
+    public function getLocationAttribute(){
+        return $this->country . ', ' . $this->city . ', ' . $this->street;
     }
 
 }

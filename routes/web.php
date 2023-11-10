@@ -33,6 +33,9 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])
         ->name('user.edit');
 
+    Route::post('/profile/{username}/images', [ProfileController::class, 'storeImages'])
+        ->name('user.images.store');
+
     Route::put('/profile/{username}', [ProfileController::class, 'update'])
         ->name('user.update');
 
