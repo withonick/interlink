@@ -70,13 +70,22 @@
                     <input type="number" placeholder="Zip" name="zip" value="{{ Auth::user()->address->zip ?? '' }}">
 
                 </div>
+
+                <div class="continue">
+                    <button class="btn btn-primary">Сохранить</button>
+                </div>
+
+
             </div>
         </div>
-
-        <div class="continue">
-            <button class="btn btn-primary">Confirm</button>
-        </div>
     </form>
+
+    <div style="display: flex; justify-content: center">
+        <form action="{{ route('logout') }}" method="post">
+            @csrf
+            <button type="submit" class="btn btn-primary">Выйти с аккаунта</button>
+        </form>
+    </div>
 </div>
 
 

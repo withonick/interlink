@@ -62,4 +62,11 @@ class ProfileController extends Controller
         }
         return back();
     }
+
+    public function deleteImage($username, $image){
+        $user = User::where('username', $username)->firstOrFail();
+        $image = $user->getMedia('gallery')->where('id', $image)->first();
+        $user->deleteMedia($image);
+        return back();
+    }
 }

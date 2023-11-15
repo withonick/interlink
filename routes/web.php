@@ -8,8 +8,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Control\AdminController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\Control\RoleController;
-use App\Http\Controllers\Control\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/login', [LoginController::class,'index'])
     ->name('login.form');
@@ -17,10 +17,11 @@ Route::get('/login', [LoginController::class,'index'])
 Route::post('/login', [LoginController::class,'login'])
     ->name('login');
 
-Route::get('/', [HomeController::class,'welcome'])
+Route::get('/', [HomeController::class,'index'])
     ->name('index');
 
 Route::middleware(['auth', 'registration_completed'])->group(function(){
+
     Route::get('/home', [HomeController::class,'index'])
         ->name('home');
 
@@ -36,10 +37,28 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::post('/profile/{username}/images', [ProfileController::class, 'storeImages'])
         ->name('user.images.store');
 
+    Route::delete('/profile/{username}/images/{image}', [ProfileController::class, 'deleteImage'])
+        ->name('user.images.delete');
+
     Route::put('/profile/{username}', [ProfileController::class, 'update'])
         ->name('user.update');
 
+    Route::get('/chat', [ChatController::class, 'index'])
+        ->name('chat.index');
 
+    Route::get('/chat/{username}', [ChatController::class, 'show'])
+        ->name('chat.show');
+
+    Route::post('/chat/{username}', [ChatController::class, 'store'])
+        ->name('chat.store');
+
+
+
+    Route::post('/like/{username}', [HomeController::class, 'like'])
+        ->name('like');
+
+    Route::post('/dislike/{username}', [HomeController::class, 'dislike'])
+        ->name('dislike');
 });
 
 

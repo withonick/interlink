@@ -24,7 +24,7 @@
 
         <div class="auth-header" style="position:absolute; top: 50px;">
             <div class="get-back-btn">
-                <i class='bx bx-chevron-left' style="background-color: transparent; color: #FFFFFF"></i>
+                <a href="{{ route('home') }}"><i class='bx bx-chevron-left' style="background-color: transparent; color: #FFFFFF"></i></a>
             </div>
         </div>
 
@@ -46,9 +46,13 @@
                                 ">
 
     <div class="auth-main" style="margin-top: -60px; display: flex; flex-direction: column">
-        <div class="user-info text-center">
-            <i class="text-center">{{ ($user->pronouns->pronouns_1 ?? '') . '/' . ($user->pronouns->pronouns_2 ?? '') }}</i>
-            <h2 style="margin-top: 20px;">{{ $user->getUserFullName() . ', ' . $user->getUserAge() }}</h2>
+        <div class="user-info">
+            <a style="float: right" href="#" ><i class='bx bx-edit' style='color:#e94057; font-size: 24px; padding: 10px; border: 1px solid var(--secondary-color); border-radius: 10px'  ></i></a>
+
+            <div class="text-center">
+                <i class="text-center">{{ ($user->pronouns->pronouns_1 ?? '') . '/' . ($user->pronouns->pronouns_2 ?? '') }}</i>
+            </div>
+            <h2 style="margin-top: 20px; display: flex; align-items: center ">{{ $user->getUserFullName() . ', ' . $user->getUserAge() }}</h2>
             <p style="font-weight: 500">{{ $user->status }}</p>
 
             <div class="mt-4">
@@ -80,25 +84,25 @@
             <div class="mt-4">
                 <h2>Gallery</h2>
 
-                <div class="mt-2">
+                <div>
                     <div class="user-gallery">
                         @forelse($user->getMedia('gallery') as $media)
-                            <a href="{{ $media->getUrl() }}"><img src="{{ $media->getUrl() }}" alt=""></a>
-                        @empty
-                            <p>No images</p>
-                            <form action="{{ route('user.images.store', $user->username) }}" method="post" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('user.images.delete', [$user->username, $media->getAttribute('id')]) }}" class="gallery_images">
                                 @csrf
-                                @method('POST')
-                                <input type="file" name="images[]" multiple>
-                                <button class="btn btn-primary">Добавить</button>
+                                @method('DELETE')
+                                <a href="{{ $media->getUrl() }}"><img src="{{ $media->getUrl() }}" alt=""></a>
+                                <button style="border: none; background-color: transparent"><i class='bx bx-x' style='color:#FFFFFF'  ></i></button>
                             </form>
+                        @empty
+                            <p style="width: 600px; font-weight: 500; font-size: 18px">Вы еще не добавили изображение в галерею.</p>
                         @endforelse
                     </div>
-                    <form action="{{ route('user.images.store', $user->username) }}" class="mt-4"  method="post" enctype="multipart/form-data">
+                    <form action="{{ route('user.images.store', $user->username) }}" class="mt-4 gallery-form"  method="post" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
-                        <input type="file" name="images[]" multiple>
-                        <button class="btn btn-primary">Добавить еще</button>
+                        <input type="file" style="display: none" id="gallery_input" name="images[]" multiple>
+                        <label id="gallery_label"> <i class='bx bx-image' style='color:#e94057'  ></i> Выбрать изображение</label>
+                        <button class="btn btn-primary">Добавить</button>
                     </form>
                 </div>
             </div>
@@ -109,5 +113,14 @@
 
 
 <script src="{{ asset('js/script.js') }}"></script>
+
+    <script>
+        const gallery_input = document.getElementById('gallery_input');
+        const gallery_label = document.getElementById('gallery_label');
+
+        gallery_label.addEventListener('click', () => {
+            gallery_input.click();
+        });
+    </script>
 </body>
 </html>
