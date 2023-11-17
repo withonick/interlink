@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Gender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -21,11 +22,21 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'firstname' => $this->faker->firstName(),
+            'surname' => $this->faker->lastName(),
+            'username' => $this->faker->unique()->userName(),
+            'status' => $this->faker->sentence(),
+            'image' => $this->faker->imageUrl(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'birthday' => $this->faker->date,
+            'gender' => Gender::cases()[$this->faker->numberBetween(0, 2)],
+            'pronouns' => '[]',
+            'bio' => $this->faker->paragraph(),
+            'socials' => null,
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'password' => 'testing',
+            'last_seen_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
+            'is_online' => $this->faker->boolean(),
         ];
     }
 

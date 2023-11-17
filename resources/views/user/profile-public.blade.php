@@ -93,6 +93,13 @@
         </div>
         {{--        <a href="#" style="float: right"><i class='bx bxl-telegram' style='color:#e94057; border: 1px solid #F3F3F3; font-size: 24px; padding: 15px; border-radius: 10px; margin-top: 10px;'  ></i></a>--}}
     </div>
+    <div class="nav">
+        <a href="{{ route('index') }}"><i class='bx bxs-card'></i></a>
+        <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
+        <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
+        <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots'></i></a>
+        <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user active'></i></a>
+    </div>
 </div>
 
 

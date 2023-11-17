@@ -133,8 +133,22 @@ class User extends Authenticatable implements hasMedia
             ->withTimestamps();
     }
 
+    public function likedByUsers(){
+        return $this->belongsToMany(User::class, 'user_liked', 'liked_user_id', 'user_id')
+            ->withTimestamps();
+    }
+
     public function dislikedUsers(){
         return $this->belongsToMany(User::class, 'user_disliked', 'user_id', 'disliked_user_id')
+            ->withTimestamps();
+    }
+
+    public function events(){
+        return $this->hasMany(Event::class);
+    }
+
+    public function matches(){
+        return $this->belongsToMany(User::class, 'matches', 'user_id', 'matched_user_id')
             ->withTimestamps();
     }
 

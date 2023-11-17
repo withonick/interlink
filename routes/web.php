@@ -52,13 +52,24 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::post('/chat/{username}', [ChatController::class, 'store'])
         ->name('chat.store');
 
-
-
     Route::post('/like/{username}', [HomeController::class, 'like'])
         ->name('like');
 
     Route::post('/dislike/{username}', [HomeController::class, 'dislike'])
         ->name('dislike');
+
+    Route::get('/matches', [HomeController::class, 'matches'])
+        ->name('matches.index');
+
+    Route::post('/matches/{username}', [HomeController::class, 'matchAccept'])
+        ->name('matches.accept');
+
+    Route::delete('/matches/{username}', [HomeController::class, 'matchDelete'])
+        ->name('matches.delete');
+
+    Route::get('/matches/{username}', [HomeController::class, 'matchDone'])
+        ->name('matches.done');
+
 });
 
 

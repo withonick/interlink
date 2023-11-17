@@ -32,38 +32,47 @@
         </div>
 
         <div class="main-content">
-            @foreach($users as $user)
-                <div class="user-image">
-                    <img id="slider_1" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
-                    <div style="display: flex; align-items: center">
-                        <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city }}</span>
-                    </div>
-                    <div class="user-image-info" >
-                        <h3 style="color: #fff">{{ $user->getUserFullName() . ', ' . $user->getUserAge() }}</h3>
-                        <span style="color: #fff">{{ $user->status }}</span>
-                    </div>
-                </div>
-            @endforeach
-            <div class="user_like_dislike">
-                <form action="{{ route('dislike', $user->username) }}" method="post" class="dislike">
-                    @csrf
-                    @method('POST')
-                    <button style="background-color: transparent; border: none"><i class='bx bx-x' style="color: #F27121"></i></button>
-                </form>
-                <div class="chat-wrapper">
-                    <a href="{{ route('chat.show', $user->username) }}"><i class='bx bxl-telegram' style='color:#FFFFFF'  ></i></a>
-                </div>
-                <form action="{{ route('like', $user->username) }}" method="post" class="like">
-                    @csrf
-                    @method('POST')
-                    <button style="background-color: transparent; border: none"><i class='bx bxs-heart' style="color: #8A2387"></i></button>
-                </form>
-            </div>
+                @forelse($users as $user)
+                    <a href="{{ route('user.show', $user->username) }}">
+                        <div class="user-image">
+                            <img id="slider_1" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
+                            <div style="display: flex; align-items: center">
+                                <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city }}</span>
+                            </div>
+                            <div class="user-image-info" >
+                                <h3 style="color: #fff">{{ $user->getUserFullName() . ', ' . $user->getUserAge() }}</h3>
+                                <span style="color: #fff">{{ $user->status }}</span>
+                            </div>
+                        </div>
+                    </a>
+            @empty
+                    <h2 style="margin-top: 150px">Новых пользователей пока нет.</h2>
+                @if(empty($users))
+
+                    @else
+                        <div class="user_like_dislike">
+                            <form action="{{ route('dislike', $user->username) }}" method="post" class="dislike">
+                                @csrf
+                                @method('POST')
+                                <button style="background-color: transparent; border: none"><i class='bx bx-x' style="color: #F27121"></i></button>
+                            </form>
+                            <div class="chat-wrapper">
+                                <a href="{{ route('chat.show', $user->username) }}"><i class='bx bxl-telegram' style='color:#FFFFFF'  ></i></a>
+                            </div>
+                            <form action="{{ route('like', $user->username) }}" method="post" class="like">
+                                @csrf
+                                @method('POST')
+                                <button style="background-color: transparent; border: none"><i class='bx bxs-heart' style="color: #8A2387"></i></button>
+                            </form>
+                        </div>
+                @endif
+
         </div>
 
         <div class="nav">
             <a href="{{ route('index') }}"><i class='bx bxs-card active'></i></a>
-            <a href="#"><i class='bx bxs-heart'></i></a>
+            <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
+            <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
             <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots'></i></a>
             <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user'></i></a>
         </div>

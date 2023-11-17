@@ -18,4 +18,8 @@ class Tag extends Model
     public function users(){
         return $this->belongsToMany(User::class, 'users_tags', 'tag_id', 'user_id');
     }
+
+    public function events(){
+        return $this->belongsToMany(Event::class, 'events_tags', 'tag_id', 'event_id');
+    }
 }

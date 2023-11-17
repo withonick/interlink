@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function PHPUnit\Framework\returnValue;
 
 class HomeController extends Controller
 {
@@ -35,7 +36,6 @@ class HomeController extends Controller
         $user = User::where('username', $username)->firstOrFail();
         Auth::user()->likedUsers()->syncWithoutDetaching($user->id);
         Auth::user()->dislikedUsers()->detach($user->id);
-        Auth::user()->messageSender()->attach($user->id, ['message' => 'Hi, I like you!']);
         return redirect()->route('index');
     }
 
@@ -45,5 +45,28 @@ class HomeController extends Controller
         Auth::user()->likedUsers()->detach($user->id);
         return redirect()->route('index');
     }
+
+    public function matches(){
+        $likes = Auth::user()->likedByUsers()->get();
+        return view('matches.index', compact('likes'));
+    }
+
+    public function matchDelete($username){
+        $user = User::where('username', $username)->firstOrFail();
+        Auth::user()->likedUsers()->detach($user->id);
+        return redirect()->route('matches.index');
+    }
+
+    public function matchAccept($username){
+        $user = User::where('username', $username)->firstOrFail();
+        Auth::user()->matches()->attach($user->id);
+        Auth::user()->likedByUsers()->detach($user->id);
+        return redirect()->route('matches.done', $username);
+    }
+
+    public function matchDone(){
+        $match = Auth::user()->matches()->first();
+        return view('matches.accept', compact('match'));
+}
 
 }
