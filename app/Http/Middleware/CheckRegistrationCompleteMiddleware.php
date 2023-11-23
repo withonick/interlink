@@ -15,8 +15,7 @@ class CheckRegistrationCompleteMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (is_null(auth()->user()->gender && auth()->user()->hobbies()->count() === 0 &&
-        auth()->user()->firstname && auth()->user()->surname && auth()->user()->birthdate)){
+        if (is_null(auth()->user()->gender && auth()->user()->hobbies()->count() === 0)){
             return redirect()->route('index');
         }
 

@@ -31,34 +31,34 @@
         </div>
 
         <div class="main-content">
-                @forelse($users as $user)
-                    <a href="{{ route('user.show', $user->username) }}">
-                        <div class="user-image">
-                            <img id="slider_1" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
-                            <div style="display: flex; align-items: center">
-                                <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city }}</span>
-                            </div>
-                            <div class="user-image-info" >
-                                <h3 style="color: #fff">{{ $user->fullname . ', ' . $user->age }}</h3>
-                                <span style="color: #fff">{{ $user->profession }}</span>
-                            </div>
+            @forelse($users as $user)
+                <a href="{{ route('user.show', $user->username) }}">
+                    <div class="user-image">
+                        <img id="slider_1" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
+                        <div style="display: flex; align-items: center">
+                            <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city }}</span>
                         </div>
-                    </a>
-                        <div class="user_like_dislike">
-                            <form action="{{ route('dislike', $user->username) }}" method="post" class="dislike">
-                                @csrf
-                                @method('POST')
-                                <button id="dislike_btn" style="background-color: transparent; border: none"><i class='bx bx-x' style="color: #F27121"></i></button>
-                            </form>
-                            <div class="chat-wrapper">
-                                <a href="{{ route('chat.show', $user->username) }}"><i class='bx bxl-telegram' style='color:#FFFFFF'  ></i></a>
-                            </div>
-                            <form action="{{ route('like', $user->username) }}" method="post" class="like">
-                                @csrf
-                                @method('POST')
-                                <button id="like_btn" style="background-color: transparent; border: none"><i class='bx bxs-heart' style="color: #8A2387"></i></button>
-                            </form>
+                        <div class="user-image-info" >
+                            <h3 style="color: #fff">{{ $user->getUserFullName() . ', ' . $user->getUserAge() }}</h3>
+                            <span style="color: #fff">{{ $user->status }}</span>
                         </div>
+                    </div>
+                </a>
+                <div class="user_like_dislike">
+                    <form action="{{ route('dislike', $user->username) }}" method="post" class="dislike">
+                        @csrf
+                        @method('POST')
+                        <button id="dislike_btn" style="background-color: transparent; border: none"><i class='bx bx-x' style="color: #F27121"></i></button>
+                    </form>
+                    <div class="chat-wrapper">
+                        <a href="{{ route('chat.show', $user->username) }}"><i class='bx bxl-telegram' style='color:#FFFFFF'  ></i></a>
+                    </div>
+                    <form action="{{ route('like', $user->username) }}" method="post" class="like">
+                        @csrf
+                        @method('POST')
+                        <button id="like_btn" style="background-color: transparent; border: none"><i class='bx bxs-heart' style="color: #8A2387"></i></button>
+                    </form>
+                </div>
             @empty
                 <h3 class="mt-2">Новых пользователей пока нет.</h3>
             @endforelse
@@ -199,7 +199,7 @@
 
                     <input type="text" placeholder="Город" class="form-control" name="city">
                 </div>
-        </div>
+            </div>
             <div class="mt-4" style="display: flex; justify-content: center">
                 <button class="btn btn-primary">Найти</button>
             </div>
@@ -209,45 +209,8 @@
         </div>
 
         <a href="#" class="modal__close"><i class='bx bx-x' style="font-size: 24px"></i></a>
-    </form>
+        </form>
+    </div>
 </div>
 
-
-<div class="reload-modal hidden" id="dislike_icon">
-    <img src="{{ asset('assets/images/cancel-image.png') }}" alt="">
-</div>
-
-<div class="reload-modal hidden" id="like_icon">
-    <img src="{{ asset('assets/images/heart-image.png') }}" alt="">
-</div>
-
-<script>
-    document.getElementById('dislike_btn').addEventListener('click', function() {
-        var icon = document.getElementById('dislike_icon');
-
-        // Показываем иконку
-        icon.style.opacity = '1';
-        icon.classList.remove('hidden');
-
-        // Через секунду скрываем иконку
-        setTimeout(function() {
-            icon.style.opacity = '0';
-            icon.classList.add('hidden');
-        }, 2000);
-    });
-
-    document.getElementById('like_btn').addEventListener('click', function() {
-        var icon = document.getElementById('like_icon');
-
-        // Показываем иконку
-        icon.style.opacity = '1';
-        icon.classList.remove('hidden');
-
-        // Через секунду скрываем иконку
-        setTimeout(function() {
-            icon.style.opacity = '0';
-            icon.classList.add('hidden');
-        }, 2000);
-    });
-</script>
 </html>

@@ -13,51 +13,39 @@
 <div class="mobile-container">
     <div class="auth-header">
         <div class="get-back-btn">
-            <h1>Notifications</h1>
-        </div>
+            <h1>Матчи</h1>
+            <div class="mt-2">
+                <p>Это список людей, которым понравились вы и ваши совпадения.</p>
+            </div>
 
-        <div class="get-back-btn">
-            <i class='bx bxl-telegram' style='color:#e94057' ></i>
         </div>
     </div>
 
     <div class="auth-main">
         <div class="chat-wrapper">
-            <h4>Последние уведомлении</h4>
-
-            <div class="message-list">
-                        @forelse($likes as $likedUser)
-                    <div class="message-bar">
-                        <div class="message_user_image">
-                            <div class="img">
-                                <img src="{{ $likedUser->getFirstMediaUrl('avatars')  }}" alt="">
+            <div class="matched_users">
+                @if($likes)
+                    @foreach($likes as $user)
+                        <div class="matched_user_wrapper">
+                            <img src="{{ $user->avatar }}" alt="">
+                            <div class="matched_user_info">
+                                <span>{{ $user->fullname . ', ' . $user->age }}</span>
                             </div>
-                        </div>
-                        <div class="message_text">
-                            <div class="message_user">
-                                <span>{{ $likedUser->getUserFullName() }}</span>
-                                <p>Пользователю понравился ваш профиль</p>
-                            </div>
-
-                            <div class="message_detail" style="flex-direction: row; gap: 0">
-                                <form action="{{ route('matches.delete', $likedUser->username) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button style="background:transparent; border: none; cursor:pointer;"><i class='bx bx-x' style="color: #FFFFFF; background-color: #cc0000; padding: 10px; border-radius: 50%; font-size: 20px"></i></button>
-                                </form>
-
-                                <form action="{{ route('matches.accept', $likedUser->username) }}" method="post">
+                            <div class="matched_user_actions">
+                                <form action="{{ route('matches.accept', $user->username) }}" method="post" class="matched_user_action">
                                     @csrf
                                     @method('POST')
-                                    <button style="background:transparent; border: none; cursor:pointer;"><i class='bx bx-check' style="color: #FFFFFF; background-color: #00FF00; padding: 10px; border-radius: 50%; font-size: 20px"></i></button>
-
+                                    <button style="background-color: transparent; border: none;"><i class='bx bx-x' style="color: #FFFFFF; font-weight: bold; font-size: 35px"></i></button>
+                                </form>
+                                <form action="{{ route('matches.delete', $user->username) }}" method="post" class="matched_user_action" style="border: none">
+                                    @csrf
+                                    @method('POST')
+                                    <button style="background-color: transparent; border: none;"><i class='bx bxs-heart' style="color: #FFFFFF; font-weight: bold; font-size: 30px"></i></button>
                                 </form>
                             </div>
                         </div>
-                    </div>
-                @empty
-                            <h3 class="mt-2">У вас пока нет уведомлении.</h3>
-                @endforelse
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>

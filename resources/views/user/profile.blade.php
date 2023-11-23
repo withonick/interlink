@@ -24,7 +24,7 @@
 
         <div class="auth-header" style="position:absolute; top: 50px;">
             <div class="get-back-btn">
-                <a href="{{ route('home') }}"><i class='bx bx-chevron-left' style="background-color: transparent; color: #FFFFFF"></i></a>
+                <a href="{{ redirect()->back() }}"><i class='bx bx-chevron-left' style="background-color: transparent; color: #FFFFFF"></i></a>
             </div>
         </div>
 
@@ -52,7 +52,7 @@
             <div class="text-center">
                 <i class="text-center">{{ ($user->pronouns->pronouns_1 ?? '') . '/' . ($user->pronouns->pronouns_2 ?? '') }}</i>
             </div>
-            <h2 style="margin-top: 20px; display: flex; align-items: center ">{{ $user->getUserFullName() . ', ' . $user->getUserAge() }}</h2>
+            <h2 style="margin-top: 20px; display: flex; align-items: center ">{{ $user->fullname . ', ' . $user->age }}</h2>
             <p style="font-weight: 500">{{ $user->status }}</p>
 
             <div class="mt-4">
@@ -75,7 +75,7 @@
                 <div class="mt-2">
                     <div class="user-hobbies">
                         @foreach($hobbies as $hobby)
-                            <label class="">{{ $hobby->name }}</label>
+                            <label style="cursor:default;">{{ $hobby->name }}</label>
                         @endforeach
                     </div>
                 </div>

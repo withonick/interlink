@@ -49,6 +49,6 @@ class RegisterController extends Controller
         $selectedHobbies = $request->input('hobbies');
         Auth::user()->hobbies()->attach($selectedHobbies);
 
-        return redirect()->route('user.show', ['username' => Auth::user()->username]);
+        return redirect()->route('user.edit', ['username' => Auth::user()->username]);
     }
 }

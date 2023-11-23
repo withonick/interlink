@@ -10,6 +10,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\Control\RoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\EventController;
 
 Route::get('/login', [LoginController::class,'index'])
     ->name('login.form');
@@ -70,6 +71,21 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::get('/matches/{username}', [HomeController::class, 'matchDone'])
         ->name('matches.done');
 
+    Route::get('/events', [EventController::class, 'index'])
+        ->name('events.index');
+
+    Route::get('/events/create', [EventController::class, 'create'])
+        ->name('events.create');
+
+    Route::post('/events', [EventController::class, 'store'])
+        ->name('events.store');
+
+    Route::get('/events/{event}', [EventController::class, 'show'])
+        ->name('events.show');
+
+    Route::get('/search', [HomeController::class, 'search'])
+        ->name('search.user');
+
 });
 
 
@@ -113,6 +129,8 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
         // Users
 
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::delete('/users/{user}/delete', [AdminController::class, 'softDeleteUser'])->name('admin.users.delete');
+        Route::post('/users/{user}/restore', [AdminController::class, 'restoreUser'])->name('admin.users.restore');
         Route::get('/roles', [AdminController::class, 'roles'])->name('admin.roles');
         Route::post('/roles', [RoleController::class, 'addRole'])->name('admin.roles.add');
         Route::get('/roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('admin.roles.permissions');
@@ -130,3 +148,7 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
         Route::post('/tags', [TagController::class,'store'])->name('admin.tag.store');
     });
 });
+
+
+Route::get('/contacts', [HomeController::class, 'contacts'])
+    ->name('contacts');

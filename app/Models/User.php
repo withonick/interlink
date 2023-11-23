@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements hasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, interactsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, interactsWithMedia, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -71,7 +72,7 @@ class User extends Authenticatable implements hasMedia
         return $this->roles()->pluck('name')->join(', ');
     }
 
-    public function getUserFullName(){
+    public function getFullNameAttribute(){
         return $this->firstname . ' ' . $this->surname;
     }
 
@@ -87,7 +88,7 @@ class User extends Authenticatable implements hasMedia
         return json_decode($value);
     }
 
-    public function getUserAge(){
+    public function getAgeAttribute(){
         $birthdate = Carbon::parse($this->birthday);
 
         $currentDate = Carbon::now();
@@ -106,16 +107,19 @@ class User extends Authenticatable implements hasMedia
         return $profilePicture->getUrl();
     }
 
-    public function messageSender(){
-        return $this->belongsToMany(User::class, 'messenger', 'sender_id', 'receiver_id')
-            ->withPivot('message', 'read', 'deleted_by_sender', 'deleted_by_receiver', 'read_at', 'deleted_at', 'sent_at', 'received_at', 'deleted_by_sender_at', 'deleted_by_receiver_at')
-            ->withTimestamps();
+    public function sentMessages()
+    {
+        return $this->hasMany(Messenger::class, 'sender_id', 'id');
     }
 
-    public function messageReceiver(){
-        return $this->belongsToMany(User::class, 'messenger', 'sender_id', 'receiver_id')
-            ->withPivot('message', 'read', 'deleted_by_sender', 'deleted_by_receiver', 'read_at', 'deleted_at', 'sent_at', 'received_at', 'deleted_by_sender_at', 'deleted_by_receiver_at')
-            ->withTimestamps();
+    public function receivedMessages()
+    {
+        return $this->hasMany(Messenger::class, 'receiver_id', 'id');
+    }
+
+    public function latestMessage()
+    {
+        return $this->sentMessages->merge($this->receivedMessages)->sortByDesc('created_at')->first();
     }
 
     public function getUnreadMessagesCount(){

@@ -15,10 +15,6 @@
         <div class="get-back-btn">
             <h1>Messages</h1>
         </div>
-
-        <div class="get-back-btn">
-            <i class='bx bxl-telegram' style='color:#e94057' ></i>
-        </div>
     </div>
 
     <div class="auth-main">
@@ -30,8 +26,8 @@
             <h4>Messages</h4>
 
             <div class="message-list">
-                @foreach($users as $user)
-                    <a href="#">
+                @forelse($latestMessages as $user)
+                    <a href="{{ route('chat.show', $user->username) }}">
                         <div class="message-bar">
                             <div class="message_user_image">
                                 <div class="img">
@@ -40,18 +36,24 @@
                             </div>
                             <div class="message_text">
                                 <div class="message_user">
-                                    <span>{{ $user->getUserFullName() }}</span>
-                                    <p>{{ $user->username }}</p>
+                                    <span>{{ $user->firstname }} {{ $user->surname }}</span>
+                                    @php
+                                        $latestMessage = $user->latestMessage();
+                                    @endphp
+                                    @if($latestMessage)
+                                        <p>{{ $latestMessage->message }}</p>
+                                    @endif
                                 </div>
 
                                 <div class="message_detail">
-                                    <span>23 min</span>
-                                    <span id="message_count">1</span>
+                                    <span>{{ \Carbon\Carbon::parse($latestMessage->created_at)->format('g:i A') }}</span>
                                 </div>
                             </div>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <p style="font-size: 20px; font-weight: 500">Еще нет сообщений.</p>
+                @endforelse
             </div>
         </div>
     </div>
@@ -59,11 +61,14 @@
     <div class="nav">
         <a href="{{ route('index') }}"><i class='bx bxs-card'></i></a>
         <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
-        <a href="#"><i class='bx bxs-heart'></i></a>
+        <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
         <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots active'></i></a>
         <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user'></i></a>
     </div>
 </div>
+
+
+
 
 
 

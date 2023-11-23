@@ -17,8 +17,11 @@ class AdminController extends Controller
 
     public function users()
     {
+        $onlyDeletedUsers = User::onlyTrashed()->get();
+
         return view('control.users.index', [
-            'users' => User::orderBy('created_at')->paginate(10)
+            'users' => User::orderBy('created_at')->paginate(10),
+            'onlyDeletedUsers' => $onlyDeletedUsers
         ]);
     }
 
@@ -37,6 +40,27 @@ class AdminController extends Controller
     {
         return view('control.tags.index',
         ['tags' => Tag::orderBy('name')->paginate(10)]);
+    }
+
+    public function softDeleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.users');
+    }
+
+    public function restoreUser($id)
+    {
+        $user = User::onlyTrashed()->where('id', $id)->firstOrFail();
+        $user->restore();
+        return redirect()->route('admin.users');
+    }
+
+    public function banUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->ban();
+        return redirect()->route('admin.users');
     }
 
 

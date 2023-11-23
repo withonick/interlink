@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Country;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,9 +21,9 @@ class ProfileController extends Controller
 
     public function edit($username){
         $user = User::where('username', $username)->firstOrFail();
-
+        $countries = Country::cases();
         if(Auth::check() and Auth::user()->username === $username) {
-            return view('user.edit', compact('user'));
+            return view('user.edit', compact('user', 'countries'));
         }
         return redirect()->route('user.show', $user->username);
     }

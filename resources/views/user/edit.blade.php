@@ -64,7 +64,11 @@
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 10px">
                     <span>Address:</span>
-                    <input type="text" placeholder="Country" name="country" value="{{ Auth::user()->address->country ?? '' }}">
+                    <select name="country">
+                        @foreach($countries as $country)
+                            <option value="{{ $country->name }}">{{ $country->name }}</option>
+                        @endforeach
+                    </select>
                     <input type="text" placeholder="City" name="city" value="{{ Auth::user()->address->city ?? '' }}">
                     <input type="text" placeholder="Street" name="street" value="{{ Auth::user()->address->street ?? '' }}">
                     <input type="number" placeholder="Zip" name="zip" value="{{ Auth::user()->address->zip ?? '' }}">

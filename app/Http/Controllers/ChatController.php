@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Messenger;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,31 +11,46 @@ use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
-    public function index(){
-        $users = Auth::user()->messageReceiver()->get();
-        return view('chat.index', compact('users'));
+    public function index()
+    {
+        $user = Auth::user();
+
+        $latestMessages = User::where('id', '!=', Auth::id())
+            ->with(['sentMessages', 'receivedMessages'])
+            ->get();
+
+        $latestMessages = $latestMessages->filter(function ($user) {
+            return $user->sentMessages->isNotEmpty() || $user->receivedMessages->isNotEmpty();
+        });
+
+        $latestMessages = $latestMessages->sortByDesc(function ($user) {
+            return optional($user->latestMessage())->created_at;
+        });
+
+
+        return view('chat.index', compact('latestMessages'));
     }
 
     public function show($username){
-        $users = Auth::user()->messageReceiver()->get();
-        $messages = DB::table('messenger')
-            ->where('sender_id', Auth::id())
-            ->where('receiver_id', User::where('username', $username)->firstOrFail()->id)
-            ->orWhere('sender_id', User::where('username', $username)->firstOrFail()->id)
-            ->where('receiver_id', Auth::id())
-            ->orderBy('created_at', 'asc')
-            ->get();
         $user = User::where('username', $username)->firstOrFail();
-        return view('chat.message', compact('user', 'messages', 'users'));
+        $messages = Messenger::where('sender_id', Auth::id())
+            ->where('receiver_id', $user->id)
+            ->orWhere('sender_id', $user->id)
+            ->where('receiver_id', Auth::id())
+            ->get();
+
+        return view('chat.message', compact('user', 'messages'));
     }
 
     public function store(Request $request, $username){
-        $validated = $request->validate([
-            'message' => 'string|max:255',
-        ]);
-
         $user = User::where('username', $username)->firstOrFail();
-        Auth::user()->messageSender()->attach($user->id, ['message' => $validated['message']]);
-        return redirect()->route('chat.show', $username);
+        $message = new Messenger();
+        $message->sender_id = Auth::id();
+        $message->receiver_id = $user->id;
+        $message->sent_at = now();
+        $message->message = $request->message;
+        $message->save();
+
+        return redirect()->back();
     }
 }

@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Event extends Model
+class Event extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $guarded = false;
 
@@ -17,10 +19,10 @@ class Event extends Model
         'short_desc',
         'date',
         'time',
-        'user_id',
-        'capacity',
+        'members',
         'location',
-        'image'
+        'price',
+        'socials',
     ];
 
     public function user(){
@@ -29,5 +31,9 @@ class Event extends Model
 
     public function tags(){
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function getAvatarAttribute(){
+        return $this->getFirstMediaUrl('event_avatars');
     }
 }

@@ -18,15 +18,17 @@
 <div class="mobile-container" style="padding: 20px">
     <div class="auth-header">
         <div class="get-back-btn">
-            <div class="reciever_user_info">
-                <div class="img">
-                    <img src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
+            <a href="{{ route('user.show', $user->username) }}">
+                <div class="reciever_user_info">
+                    <div class="img">
+                        <img src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
+                    </div>
+                    <div class="reciever_info">
+                        <span style="display: flex; align-items: center; color: #121212">{{ $user->username }}</span>
+                        <p><i class='bx bxs-circle' style='color:#e94057'  ></i> {{ $user->is_online ? 'Online' : 'Offline' }}</p>
+                    </div>
                 </div>
-                <div class="reciever_info">
-                    <span style="display: flex; align-items: center; color: #121212">{{ $user->username }}</span>
-                    <p><i class='bx bxs-circle' style='color:#e94057'  ></i> {{ $user->is_online ? 'Online' : 'Offline' }}</p>
-                </div>
-            </div>
+            </a>
         </div>
 
         <div class="get-back-btn">
@@ -38,17 +40,25 @@
         <div class="chat-container" id="messageContainer">
             @foreach($messages as $message)
                 @if($message->sender_id == auth()->id())
-                    <div class="sender_message">
-                        <div class="sender_message_text">
-                            <p>{{ $message->message }}</p>
-                            <span>{{ \Carbon\Carbon::parse($message->created_at)->diffForHumans(null, true) }}</span>
+                    <div style="display: flex; justify-content: flex-end">
+                        <div class="sender_message" >
+                            <div class="sender_message_text">
+                                <p>{{ $message->message }}</p>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; margin-top: 5px">
+                                <span style="font-size: 14px; color: silver">{{ \Carbon\Carbon::parse($message->created_at)->format('g:i A') }}</span>
+                            </div>
                         </div>
                     </div>
                 @else
-                    <div class="reciever_message">
-                        <div class="reciever_message_text">
-                            <p>{{ $message->message }}</p>
-                            <span>{{ \Carbon\Carbon::parse($message->created_at)->diffForHumans(null, true) }}</span>
+                    <div style="display: flex; justify-content: flex-start">
+                        <div class="reciever_message">
+                            <div class="reciever_message_text">
+                                <p>{{ $message->message }}</p>
+                            </div>
+                            <div style="display: flex; justify-content: flex-start; margin-top: 5px">
+                                <span style="font-size: 14px; color: silver">{{ \Carbon\Carbon::parse($message->created_at)->format('g:i A') }}</span>
+                            </div>
                         </div>
                     </div>
                 @endif

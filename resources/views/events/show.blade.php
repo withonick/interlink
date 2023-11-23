@@ -13,7 +13,7 @@
                 max-width: 700px;
                 margin: 0 auto;
                 height: 800px;
-                background-image: url({{ $user->getFirstMediaUrl('avatars') ?? asset('assets/images/avatar.jpg') }});
+                background-image: url({{ $event->getFirstMediaUrl('event_avatars') ?? asset('assets/images/avatar.jpg') }});
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -42,41 +42,49 @@
     <div class="auth-main" style="margin-top: -60px; display: flex; flex-direction: column">
         <div class="user-info">
             <div class="text-center">
-                <a style="float: right" href="#" ><i class='bx bxl-telegram' style='color:#e94057; font-size: 24px; padding: 10px; border: 1px solid var(--secondary-color); border-radius: 10px'  ></i></a>
+                <a style="float: right" href="#" ><i class='bx bx-plus' style='color:#e94057; font-size: 24px; padding: 10px; border: 1px solid var(--secondary-color); border-radius: 10px'  ></i></a>
 
-                <i class="text-center">{{ ($user->pronouns->pronouns_1 ?? '') . '/' . ($user->pronouns->pronouns_2 ?? '') }}</i>
+                <i class="text-center"></i>
             </div>
-            <h2 style="margin-top: 20px;">{{ $user->fullname . ', ' . $user->age }}</h2>
-            <p style="font-weight: 500">{{ $user->status }}</p>
+            <h2 style="margin-top: 20px;">{{ $event->name}}</h2>
+            <p style="font-weight: 500">{{ $event->short_desc }}</p>
 
             <div class="mt-4">
                 <h2>Location</h2>
                 <div class="mt-2">
-                    <span style="font-weight: 500">{{ $user->address->location ?? '' }}</span>
+                    <span style="font-weight: 500">{{ $event->location ?? '' }} Время: {{ $event->time }}</span>
                 </div>
             </div>
 
             <div class="mt-4">
-                <h2>About</h2>
+                <h2>Date & time</h2>
+                <div class="mt-2" style="display: flex; flex-direction: column; gap: 10px">
+                    <span style="font-weight: 500">{{ \Carbon\Carbon::parse($event->date)->format('d.m.Y') ?? '' }}</span>
+                    <span style="font-weight: 500">Время: {{ \Carbon\Carbon::parse($event->time)->format('h:i') }}</span>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h2>Description</h2>
                 <div class="mt-2">
-                    <p>{{ $user->bio }}</p>
+                    <p>{{ $event->description }}</p>
                 </div>
             </div>
 
             <div class="mt-4">
-                <h2>Interests</h2>
+                <h2>Tags</h2>
 
                 <div class="mt-2">
                     <div class="user-hobbies">
-                        @forelse($hobbies as $hobby)
-                            @if(Auth::user()->hobbies->contains($hobby))
-                                <label class=""> <i class='bx bx-check-double' ></i> {{ $hobby->name }}</label>
-                            @else
-                                <label class=""> {{ $hobby->name }}</label>
-                            @endif
-                        @empty
-                            <p style="width: 600px; font-weight: 500; font-size: 18px">Пользователь еще не добавил интересы.</p>
-                        @endforelse
+{{--                        @forelse($hobbies as $hobby)--}}
+{{--                            @if(Auth::user()->hobbies->contains($hobby))--}}
+{{--                                <label class=""> <i class='bx bx-check-double' ></i> {{ $hobby->name }}</label>--}}
+{{--                            @else--}}
+{{--                                <label class=""> {{ $hobby->name }}</label>--}}
+{{--                            @endif--}}
+{{--                        @empty--}}
+{{--                            <p style="width: 600px; font-weight: 500; font-size: 18px">Пользователь еще не добавил интересы.</p>--}}
+{{--                        @endforelse--}}
                     </div>
                 </div>
             </div>
@@ -86,10 +94,10 @@
 
                 <div>
                     <div class="user-gallery">
-                        @forelse($user->getMedia('gallery') as $media)
+                        @forelse($event->getMedia('gallery') as $media)
                                 <a href="{{ $media->getUrl() }}"><img src="{{ $media->getUrl() }}" alt=""></a>
                         @empty
-                            <p style="width: 600px; font-weight: 500; font-size: 18px">Пользователь еще не добавил изображение в галерею.</p>
+                            <p style="width: 600px; font-weight: 500; font-size: 18px">Создатель еще не добавил изображение в галерею.</p>
                         @endforelse
                     </div>
                 </div>
