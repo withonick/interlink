@@ -24,7 +24,7 @@
                         <img src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
                     </div>
                     <div class="reciever_info">
-                        <span style="display: flex; align-items: center; color: #121212">{{ $user->username }}</span>
+                        <span style="display: flex; align-items: center; color: #121212">{!! $user->top_full_name !!}</span>
                         <p><i class='bx bxs-circle' style='color:#e94057'  ></i> {{ $user->is_online ? 'Online' : 'Offline' }}</p>
                     </div>
                 </div>
@@ -70,13 +70,7 @@
             <div style="position:relative; width: 90%;">
                 <input type="text" placeholder="Your message" name="message">
             </div>
-            <div class="nav">
-                <a href="{{ route('index') }}"><i class='bx bxs-card'></i></a>
-                <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
-                <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
-                <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots active'></i></a>
-                <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user'></i></a>
-            </div>
+            @include('layouts.nav')
         </form>
     </div>
 </div>

@@ -30,7 +30,7 @@
 
         <div class="auth-header" style="position:absolute; top: 50px; right: 0">
             <div class="get-back-btn">
-                <a href="{{ route('user.edit', $user->username) }}"><i class='bx bxs-cog' style='color:#e94057; font-size: 24px; background-color: #FFFFFF'  ></i></a>
+                <a href="{{ route('user.settings', $user->username) }}"><i class='bx bxs-cog' style='color:#e94057; font-size: 24px; background-color: #FFFFFF'  ></i></a>
             </div>
         </div>
 
@@ -47,12 +47,12 @@
 
     <div class="auth-main" style="margin-top: -60px; display: flex; flex-direction: column">
         <div class="user-info">
-            <a style="float: right" href="#" ><i class='bx bx-edit' style='color:#e94057; font-size: 24px; padding: 10px; border: 1px solid var(--secondary-color); border-radius: 10px'  ></i></a>
+            <a style="float: right" href="{{ route('user.edit', $user->username) }}" ><i class='bx bx-edit' style='color:#e94057; font-size: 24px; padding: 10px; border: 1px solid var(--secondary-color); border-radius: 10px'  ></i></a>
 
             <div class="text-center">
                 <i class="text-center">{{ ($user->pronouns->pronouns_1 ?? '') . '/' . ($user->pronouns->pronouns_2 ?? '') }}</i>
             </div>
-            <h2 style="margin-top: 20px; display: flex; align-items: center ">{{ $user->fullname . ', ' . $user->age }}</h2>
+            <h2 style="margin-top: 20px; display: flex; align-items: center ">{!! $user->top_full_name !!}</h2>
             <p style="font-weight: 500">{{ $user->status }}</p>
 
             <div class="mt-4">
@@ -106,16 +106,29 @@
                     </form>
                 </div>
             </div>
+
+            <div class="mt-4">
+                <h2>Посты</h2>
+
+                <div>
+                    <div class="user-gallery">
+                        @forelse($posts as $post)
+                                <div class="mt-2">
+                                    <a href="{{ $post->image }}"><img src="{{ $post->image }}" alt=""></a>
+                                    <a style="font-weight: 600" href="{{ route('posts.show', $post) }}">{{ $post->body }}</a>
+                                </div>
+                        @empty
+                            <p style="width: 600px; font-weight: 500; font-size: 18px">Вы еще не добавили изображение в галерею.</p>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
         </div>
 {{--        <a href="#" style="float: right"><i class='bx bxl-telegram' style='color:#e94057; border: 1px solid #F3F3F3; font-size: 24px; padding: 15px; border-radius: 10px; margin-top: 10px;'  ></i></a>--}}
     </div>
-    <div class="nav">
-        <a href="{{ route('index') }}"><i class='bx bxs-card'></i></a>
-        <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
-        <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
-        <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots'></i></a>
-        <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user active'></i></a>
-    </div>
+
+    @include('layouts.nav')
+
 </div>
 
 

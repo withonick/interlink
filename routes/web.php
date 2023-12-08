@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HobbyController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -45,6 +47,18 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
 
     Route::put('/profile/{username}', [ProfileController::class, 'update'])
         ->name('user.update');
+
+    Route::get('/profile/{username}/settings', [ProfileController::class, 'settings'])
+        ->name('user.settings');
+
+    Route::get('/profile/{username}/settings/verifications', [ProfileController::class, 'verify_index'])
+        ->name('user.verifications');
+
+    Route::post('/profile/{username}/settings/verifications', [ProfileController::class, 'verify'])
+        ->name('user.verify');
+
+    Route::post('/profile/{username}/settings/verifications/verify', [VerificationController::class, 'store'])
+        ->name('user.verify.store');
 
     Route::get('/chat', [ChatController::class, 'index'])
         ->name('chat.index');
@@ -95,6 +109,31 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::post('/stories/delete/{story}', [StoryController::class, 'destroy'])
         ->name('stories.delete');
 
+
+    Route::get('/posts', [PostController::class, 'index'])
+        ->name('posts.index');
+
+    Route::get('/posts/create', [PostController::class, 'create'])
+        ->name('posts.create');
+
+    Route::get('/posts/{post}', [PostController::class, 'show'])
+        ->name('posts.show');
+
+    Route::post('/posts', [PostController::class, 'store'])
+        ->name('posts.store');
+
+    Route::post('/posts/{post}/like', [PostController::class, 'like'])
+        ->name('posts.like');
+
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])
+        ->name('posts.edit');
+
+    Route::put('/posts/{post}', [PostController::class, 'update'])
+        ->name('posts.update');
+
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])
+        ->name('posts.destroy');
+
 });
 
 
@@ -138,6 +177,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/control', [AdminController::class, 'index'])->name('admin.index');
 
     Route::prefix('/control')->group(function(){
+
+        Route::get('/verifications', [AdminController::class, 'verifications'])->name('admin.verifications');
+
+        Route::post('/verifications/{username}', [AdminController::class, 'accept'])->name('admin.verifications.accept');
 
         // Users
 

@@ -46,7 +46,7 @@
 
                 <i class="text-center">{{ ($user->pronouns->pronouns_1 ?? '') . '/' . ($user->pronouns->pronouns_2 ?? '') }}</i>
             </div>
-            <h2 style="margin-top: 20px;">{{ $user->fullname . ', ' . $user->age }}</h2>
+            <h2 style="margin-top: 20px; display: flex; align-items: center">{!! $user->top_full_name !!}</h2>
             <p style="font-weight: 500">{{ $user->status }}</p>
 
             <div class="mt-4">
@@ -97,13 +97,8 @@
         </div>
         {{--        <a href="#" style="float: right"><i class='bx bxl-telegram' style='color:#e94057; border: 1px solid #F3F3F3; font-size: 24px; padding: 15px; border-radius: 10px; margin-top: 10px;'  ></i></a>--}}
     </div>
-    <div class="nav">
-        <a href="{{ route('index') }}"><i class='bx bxs-card'></i></a>
-        <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
-        <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
-        <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots'></i></a>
-        <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user active'></i></a>
-    </div>
+    @include('layouts.nav')
+
 </div>
 
 

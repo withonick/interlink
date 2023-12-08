@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Control;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Verification;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -61,6 +62,25 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
         $user->ban();
         return redirect()->route('admin.users');
+    }
+
+    public function verifications(){
+        $verifications = Verification::all();
+        return view('control.verifications.index', compact('verifications'));
+    }
+
+    public function accept($username){
+
+        $user = User::where('username', $username)->firstOrFail();
+
+        $user->update([
+            'is_verified' => true
+        ]);
+
+        $user->verification->delete();
+
+
+        return redirect()->route('admin.verifications');
     }
 
 

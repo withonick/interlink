@@ -321,6 +321,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin.verifications') }}">
+                <i class='bx bx-check-double'></i>
+                <span>Подтверждение</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                 <i class="ri-calendar-event-fill"></i><span>Мероприятии</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>

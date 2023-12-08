@@ -36,7 +36,7 @@
                             </div>
                             <div class="message_text">
                                 <div class="message_user">
-                                    <span>{{ $user->firstname }} {{ $user->surname }}</span>
+                                    <span style="display: flex; align-items: center; font-size: 18px">{!! $user->top_full_name !!}</span>
                                     @php
                                         $latestMessage = $user->latestMessage();
                                     @endphp
@@ -58,13 +58,8 @@
         </div>
     </div>
 
-    <div class="nav">
-        <a href="{{ route('index') }}"><i class='bx bxs-card'></i></a>
-        <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
-        <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
-        <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots active'></i></a>
-        <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user'></i></a>
-    </div>
+    @include('layouts.nav')
+
 </div>
 
 

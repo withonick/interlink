@@ -12,11 +12,12 @@ class ProfileController extends Controller
 {
     public function show($username){
         $user = User::where('username', $username)->firstOrFail();
+        $posts = $user->posts()->orderBy('created_at', 'desc')->get();
         $hobbies = $user->hobbies()->orderBy('name')->get();
         if(Auth::check() and Auth::user()->username === $username) {
-            return view('user.profile', compact('user', 'hobbies'));
+            return view('user.profile', compact('user', 'hobbies', 'posts'));
         }
-        return view('user.profile-public', compact('user', 'hobbies'));
+        return view('user.profile-public', compact('user', 'hobbies', 'posts'));
     }
 
     public function edit($username){
@@ -69,5 +70,30 @@ class ProfileController extends Controller
         $image = $user->getMedia('gallery')->where('id', $image)->first();
         $user->deleteMedia($image);
         return back();
+    }
+
+    public function settings($username){
+        $user = User::where('username', $username)->firstOrFail();
+        if(Auth::check() and Auth::user()->username === $username) {
+            return view('user.settings', compact('user'));
+        }
+        return redirect()->route('user.show', $user->username);
+    }
+
+    public function verify_index($username){
+        $user = User::where('username', $username)->firstOrFail();
+        if(Auth::check() and Auth::user()->username === $username) {
+            return view('user.verify', compact('user'));
+        }
+        return redirect()->route('user.show', $user->username);
+    }
+
+    public function verify(Request $request){
+        $user = auth()->user();
+        $validatedData = $request->validate([
+            'verifications' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $user->addMediaFromRequest('verifications')->toMediaCollection('verifications');
+        return redirect()->route('user.settings', $user->username);
     }
 }

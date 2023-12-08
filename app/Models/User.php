@@ -170,4 +170,23 @@ class User extends Authenticatable implements hasMedia
         return $stories;
     }
 
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
+    public function likedPosts(){
+        return $this->belongsToMany(Post::class, 'users_post_likes', 'user_id', 'post_id')
+            ->withTimestamps();
+    }
+
+    public function getTopFullNameAttribute(){
+        if($this->is_verified)
+            return $this->firstname . ' ' . $this->surname . '<img style="width: 20px; margin-left: 5px; margin-top: 1px" src="' . asset('assets/images/verified.webp') . '" />';
+        else
+            return $this->firstname . ' ' . $this->surname;
+    }
+
+    public function verification(){
+        return $this->hasOne(Verification::class);
+    }
 }

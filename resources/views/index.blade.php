@@ -40,7 +40,7 @@
                                 <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city }}</span>
                             </div>
                             <div class="user-image-info" >
-                                <h3 style="color: #fff">{{ $user->fullname . ', ' . $user->age }}</h3>
+                                <h3 style="color: #fff; display: flex; align-items: center; justify-content: center">{!! $user->top_full_name . ', ' . $user->age !!}</h3>
                                 <span style="color: #fff">{{ $user->profession }}</span>
                             </div>
                         </div>
@@ -65,13 +65,7 @@
             @endforelse
         </div>
 
-        <div class="nav">
-            <a href="{{ route('index') }}"><i class='bx bxs-card active'></i></a>
-            <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
-            <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
-            <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots'></i></a>
-            <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user'></i></a>
-        </div>
+        @include('layouts.nav')
 
     </div>
 </div>
