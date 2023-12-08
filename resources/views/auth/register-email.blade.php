@@ -37,6 +37,10 @@
                 <div class="number-input">
                     <i class='bx bxs-key' ></i><input type="password" placeholder="Password" name="password">
                 </div>
+
+                <div class="google-auth text-center continue mt-2" style="padding: 0; margin-top: 20px">
+                    <a href="{{ route('google_page') }}" class="btn" style="border: 1px solid var(--secondary-color); display: flex; align-items: center; gap: 10px; width: 400px;"><i class='bx bxl-google' style='color:#e94057; font-size: 24px'  ></i> Sign up with Google</a>
+                </div>
             </div>
 
             <div class="continue">

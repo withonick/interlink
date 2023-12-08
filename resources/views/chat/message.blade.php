@@ -70,6 +70,13 @@
             <div style="position:relative; width: 90%;">
                 <input type="text" placeholder="Your message" name="message">
             </div>
+            <div class="nav">
+                <a href="{{ route('index') }}"><i class='bx bxs-card'></i></a>
+                <a href="#"><i class='bx bx-calendar-event' style='color:#adafbb'  ></i></a>
+                <a href="{{ route('matches.index') }}"><i class='bx bxs-heart'></i></a>
+                <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots active'></i></a>
+                <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user'></i></a>
+            </div>
         </form>
     </div>
 </div>

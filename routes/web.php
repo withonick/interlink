@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HobbyController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Control\RoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\StoryController;
 
 Route::get('/login', [LoginController::class,'index'])
     ->name('login.form');
@@ -86,6 +88,13 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::get('/search', [HomeController::class, 'search'])
         ->name('search.user');
 
+
+    Route::post('/stories', [StoryController::class, 'store'])
+        ->name('stories.store');
+
+    Route::post('/stories/delete/{story}', [StoryController::class, 'destroy'])
+        ->name('stories.delete');
+
 });
 
 
@@ -93,6 +102,10 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
 
 Route::get('/register', [RegisterController::class,'create'])
     ->name('register.form');
+
+Route::get('/auth/google', [RegisterController::class, 'googleRedirect'])->name('google_page');
+
+Route::get('/auth/google/callback', [RegisterController::class, 'googleCallback'])->name('google_redirect');
 
 Route::get('/register/email', [RegisterController::class, 'email'])
     ->name('register.email');
@@ -152,3 +165,7 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
 Route::get('/contacts', [HomeController::class, 'contacts'])
     ->name('contacts');
+
+
+Route::get('/sendmail', [MailController::class, 'send'])
+    ->name('sendmail');

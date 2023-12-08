@@ -12,6 +12,7 @@
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
 
+
 </head>
 <body>
 <div class="mobile-container text-center">
@@ -26,7 +27,7 @@
             </div>
 
             <div class="get-back-btn">
-                <a href="#demo-modal"><i class='bx bx-filter' style='color:#e94057'  ></i></a>
+                <a href="#search-modal"><i class='bx bx-filter' style='color:#e94057'  ></i></a>
             </div>
         </div>
 
@@ -86,8 +87,8 @@
 
 </body>
 
-<div id="demo-modal" class="modal">
-    <div class="modal__content">
+<div id="search-modal" class="search-modal">
+    <div class="search_modal_content">
         <h1>Фильтр</h1>
 
         <form action="{{ route('search.user') }}" method="get"  class="filter-wrapper">
@@ -199,55 +200,18 @@
 
                     <input type="text" placeholder="Город" class="form-control" name="city">
                 </div>
-        </div>
+            </div>
             <div class="mt-4" style="display: flex; justify-content: center">
                 <button class="btn btn-primary">Найти</button>
             </div>
         </form>
 
-        <div class="modal__footer">
+        <div class="search_modal_footer">
         </div>
 
-        <a href="#" class="modal__close"><i class='bx bx-x' style="font-size: 24px"></i></a>
-    </form>
+        <a href="#" class="search_modal_close"><i class='bx bx-x' style="font-size: 24px"></i></a>
+        </form>
+    </div>
 </div>
 
-
-<div class="reload-modal hidden" id="dislike_icon">
-    <img src="{{ asset('assets/images/cancel-image.png') }}" alt="">
-</div>
-
-<div class="reload-modal hidden" id="like_icon">
-    <img src="{{ asset('assets/images/heart-image.png') }}" alt="">
-</div>
-
-<script>
-    document.getElementById('dislike_btn').addEventListener('click', function() {
-        var icon = document.getElementById('dislike_icon');
-
-        // Показываем иконку
-        icon.style.opacity = '1';
-        icon.classList.remove('hidden');
-
-        // Через секунду скрываем иконку
-        setTimeout(function() {
-            icon.style.opacity = '0';
-            icon.classList.add('hidden');
-        }, 2000);
-    });
-
-    document.getElementById('like_btn').addEventListener('click', function() {
-        var icon = document.getElementById('like_icon');
-
-        // Показываем иконку
-        icon.style.opacity = '1';
-        icon.classList.remove('hidden');
-
-        // Через секунду скрываем иконку
-        setTimeout(function() {
-            icon.style.opacity = '0';
-            icon.classList.add('hidden');
-        }, 2000);
-    });
-</script>
 </html>

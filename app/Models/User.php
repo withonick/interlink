@@ -156,4 +156,18 @@ class User extends Authenticatable implements hasMedia
             ->withTimestamps();
     }
 
+    public function story(){
+        return $this->hasOne(Story::class);
+    }
+
+    public function getMatchedStoriesAttribute(){
+        $stories = collect();
+        foreach ($this->matches as $match){
+            foreach ($match->stories as $story){
+                $stories->push($story);
+            }
+        }
+        return $stories;
+    }
+
 }

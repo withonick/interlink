@@ -39,8 +39,8 @@
                             <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city }}</span>
                         </div>
                         <div class="user-image-info" >
-                            <h3 style="color: #fff">{{ $user->getUserFullName() . ', ' . $user->getUserAge() }}</h3>
-                            <span style="color: #fff">{{ $user->status }}</span>
+                            <h3 style="color: #fff">{{ $user->fullname . ', ' . $user->age }}</h3>
+                            <span style="color: #fff">{{ $user->status }}a
                         </div>
                     </div>
                 </a>
@@ -86,8 +86,8 @@
 
 </body>
 
-<div id="demo-modal" class="modal">
-    <div class="modal__content">
+<div id="demo-modal" class="search-modal">
+    <div class="search_modal_content">
         <h1>Фильтр</h1>
 
         <form action="{{ route('search.user') }}" method="get"  class="filter-wrapper">
@@ -205,10 +205,10 @@
             </div>
         </form>
 
-        <div class="modal__footer">
+        <div class="search_modal_footer">
         </div>
 
-        <a href="#" class="modal__close"><i class='bx bx-x' style="font-size: 24px"></i></a>
+        <a href="#" class="search_modal_close"><i class='bx bx-x' style="font-size: 24px"></i></a>
         </form>
     </div>
 </div>

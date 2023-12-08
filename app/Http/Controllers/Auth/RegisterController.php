@@ -11,6 +11,7 @@ use App\Models\Hobby;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
 {
@@ -50,5 +51,37 @@ class RegisterController extends Controller
         Auth::user()->hobbies()->attach($selectedHobbies);
 
         return redirect()->route('user.edit', ['username' => Auth::user()->username]);
+    }
+
+    public function googleRedirect(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleCallback(){
+        try{
+            $user = Socialite::driver('google')->user();
+
+
+            $existingUser = User::where('email', $user->email)->first();
+
+            if($existingUser){
+                Auth::login($existingUser, true);
+
+                return redirect()->route('index');
+            }
+            else{
+                $newUser = new User();
+                $newUser->email = $user->email;
+                $newUser->google_id = $user->id;
+                $newUser->save();
+
+                Auth::login($newUser);
+
+                return redirect()->route('index');
+            }
+        }
+        catch (\Exception $e){
+            dd($e->getMessage());
+        }
     }
 }

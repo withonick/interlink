@@ -41,7 +41,7 @@
                                         $latestMessage = $user->latestMessage();
                                     @endphp
                                     @if($latestMessage)
-                                        <p>{{ $latestMessage->message }}</p>
+                                        <p>{{ Str::limit($latestMessage->message, 55) }}</p>
                                     @endif
                                 </div>
 

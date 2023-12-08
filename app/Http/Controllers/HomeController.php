@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Story;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use function PHPUnit\Framework\returnValue;
+use function PHPUnit\TestFixture\func;
 
 class HomeController extends Controller
 {
@@ -55,7 +57,8 @@ class HomeController extends Controller
 
     public function matches(){
         $likes = Auth::user()->likedByUsers()->get();
-        return view('matches.index', compact('likes'));
+        $stories = Story::where('user_id', '!=', Auth::user()->id)->get();
+        return view('matches.index', compact('likes', 'stories'));
     }
 
     public function matchDelete($username){
@@ -83,46 +86,26 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $user = User::query();
-
-        if ($request->filled('query')) {
-            $user->where(function ($query) use ($request) {
-                $query->where('firstname', 'like', "%{$request->input('query')}%")
-                    ->orWhere('surname', 'like', "%{$request->input('query')}%")
-                    ->orWhere('username', 'like', "%{$request->input('query')}%")
-                    ->orWhere('email', 'like', "%{$request->input('query')}%");
+        $users = User::query()->when($request->input('query'), function ($query, $search) {
+            return $query->where('firstname', 'like', "%{$search}%")
+                ->orWhere('surname', 'like', "%{$search}%")
+                ->orWhere('username', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+        })->when($request->input('gender'), function ($query, $search) {
+            return $query->where('gender', '=', $search);
+        })->when($request->input('age_min'), function ($query, $search) {
+            return $query->where(DB::raw("EXTRACT(YEAR FROM birthday)"), '<=', date('Y') - $search);
+        })->when($request->input('age_max'), function ($query, $search) {
+            return $query->where(DB::raw("EXTRACT(YEAR FROM birthday)"), '>=', date('Y') - $search);
+        })->when($request->input('country'), function ($query, $search) {
+            return $query->whereHas('address', function ($query) use ($search) {
+                $query->where('country', $search);
             });
-        }
-
-        if ($request->filled('gender')) {
-            $user->where('gender', '=', $request->input('gender'));
-        }
-
-        if ($request->filled('age_min') && is_numeric($request->input('age_min'))) {
-            $minBirthYear = date('Y') - (int)$request->input('age_min');
-            $user->where(DB::raw("EXTRACT(YEAR FROM birthday)"), '<=', $minBirthYear);
-        }
-
-        if ($request->filled('age_max') && is_numeric($request->input('age_max'))) {
-            $maxBirthYear = date('Y') - (int)$request->input('age_max');
-            $user->where(DB::raw("EXTRACT(YEAR FROM birthday)"), '>=', $maxBirthYear);
-        }
-
-        if ($request->filled('country')) {
-            $country = $request->input('country');
-            $user->whereHas('address', function ($query) use ($country) {
-                $query->where('country', $country);
+        })->when($request->input('city'), function ($query, $search) {
+                return $query->whereHas('address', function ($query) use ($search) {
+                $query->where('city','like',  "%{$search}%" );
             });
-        }
-
-        if ($request->has('city')) {
-            $city = urldecode($request->input('city'));
-            $users = User::whereHas('address', function ($query) use ($city) {
-                $query->where('city', $city);
-            })->get();
-        } else {
-            $users = User::query()->get();
-        }
+        })->get();
 
         $users = $users->reject(function ($user) {
             return $user->id == auth()->id();
