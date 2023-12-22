@@ -15,15 +15,19 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\StoryController;
+use App\Http\Controllers\Config\ConfigController;
+
+Route::get('/config', [ConfigController::class, 'index'])->name('config');
+
+Route::get('/', [HomeController::class,'index'])
+    ->name('index');
+
 
 Route::get('/login', [LoginController::class,'index'])
     ->name('login.form');
 
 Route::post('/login', [LoginController::class,'login'])
     ->name('login');
-
-Route::get('/', [HomeController::class,'index'])
-    ->name('index');
 
 Route::middleware(['auth', 'registration_completed'])->group(function(){
 
