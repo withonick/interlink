@@ -196,7 +196,7 @@ return [
      * This is particularly useful when the url of the image is behind a firewall and
      * need to add additional flags, possibly using curl.
      */
-    'media_downloader' => Spatie\MediaLibrary\Downloaders\DefaultDownloader::class,
+    'media_downloader' => \App\Support\MediaLibrary\Downloaders\CustomDownloader::class,
 
     'remote' => [
         /*

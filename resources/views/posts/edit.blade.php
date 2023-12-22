@@ -23,7 +23,7 @@
             <div class="posts_list">
                 <form action="{{ route('posts.update', $post) }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    @method('post')
+                    @method('put')
                     <textarea name="body" class="form-control" rows="10" style="width: 100%">{{ $post->body }}</textarea>
                     <label id="post_image_btn_label" class="mt-2">Добавить изображение</label>
                     <input style="display: none" type="file" name="image" id="post_upload_input">
