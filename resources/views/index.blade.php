@@ -37,7 +37,7 @@
                         <div class="user-image">
                             <img id="slider_1" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
                             <div style="display: flex; align-items: center">
-                                <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city }}</span>
+                                <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city ?? '' }}</span>
                             </div>
                             <div class="user-image-info" >
                                 <h3 style="color: #fff; display: flex; align-items: center; justify-content: center">{!! $user->top_full_name . ', ' . $user->age !!}</h3>

@@ -62,6 +62,19 @@ return [
             'url'    => env('APP_URL').'/media',
         ],
 
+        'permissons' => [
+
+            'file' => [
+                'public' => 0774,
+                'private' => 0600,
+            ],
+
+            'dir' => [
+                'public' => 0775,
+                'private' => 0700,
+            ],
+        ],
+
     ],
 
     /*
