@@ -15,7 +15,11 @@ class StoryController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
-        $story->addMedia($request->file('story'))->toMediaCollection('stories');
+        $story->addMedia($request->file('story'))
+            ->addCustomHeaders([
+                'ACL' => 'public-read'
+            ])
+            ->toMediaCollection('stories');
 
         return redirect()->route('matches.index');
     }

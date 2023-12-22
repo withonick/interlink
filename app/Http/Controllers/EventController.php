@@ -26,7 +26,11 @@ class EventController extends Controller
         $event = Event::create($request->validated());
 
         if ($request->has('image')){
-            $event->addMediaFromRequest('image')->toMediaCollection('event_avatars');
+            $event->addMediaFromRequest('image')
+                ->addCustomHeaders([
+                    'ACL' => 'public-read'
+                ])
+                ->toMediaCollection('event_avatars');
         }
 
         return redirect()->route('events.index');

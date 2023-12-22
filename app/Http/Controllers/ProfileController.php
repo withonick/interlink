@@ -51,7 +51,11 @@ class ProfileController extends Controller
         $user->update($validatedData);
         if ($request->image != null){
             $user->clearMediaCollection('avatars');
-            $user->addMediaFromRequest('image')->toMediaCollection('avatars');
+            $user->addMediaFromRequest('image')
+                ->addCustomHeaders([
+                    'ACL' => 'public-read'
+                ])
+                ->toMediaCollection('avatars');
         }
 
         return redirect()->route('user.show', $user->username);
@@ -60,7 +64,11 @@ class ProfileController extends Controller
     public function storeImages(Request $request){
         $user = auth()->user();
         foreach ($request->images as $image){
-            $user->addMedia($image)->toMediaCollection('gallery');
+            $user->addMedia($image)
+                ->addCustomHeaders([
+                    'ACL' => 'public-read'
+                ])
+                ->toMediaCollection('gallery');
         }
         return back();
     }
@@ -93,7 +101,11 @@ class ProfileController extends Controller
         $validatedData = $request->validate([
             'verifications' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $user->addMediaFromRequest('verifications')->toMediaCollection('verifications');
+        $user->addMediaFromRequest('verifications')
+            ->addCustomHeaders([
+                'ACL' => 'public-read'
+            ])
+            ->toMediaCollection('verifications');
         return redirect()->route('user.settings', $user->username);
     }
 }

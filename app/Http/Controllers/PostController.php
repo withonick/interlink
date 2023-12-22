@@ -28,7 +28,11 @@ class PostController extends Controller
 
 
         if ($request->has('image')){
-            $post->addMediaFromRequest('image')->toMediaCollection('post_images');
+            $post->addMediaFromRequest('image')
+                ->addCustomHeaders([
+                    'ACL' => 'public-read'
+                ])
+                ->toMediaCollection('post_images');
         }
 
         return redirect()->route('posts.index');
