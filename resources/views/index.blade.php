@@ -88,7 +88,6 @@
         <form action="{{ route('search.user') }}" method="get"  class="filter-wrapper">
             @csrf
             @method('GET')
-
             <div class="search__input-wrapper">
                 <input type="text" placeholder="Имя, Фамилия, Логин, Эл. адрес" name="query">
                 <i class='bx bx-search'></i>

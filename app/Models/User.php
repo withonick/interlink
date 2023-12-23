@@ -181,7 +181,7 @@ class User extends Authenticatable implements hasMedia
 
     public function getTopFullNameAttribute(){
         if($this->is_verified)
-            return $this->firstname . ' ' . $this->surname . '<img style="width: 20px; margin-left: 5px; margin-top: 1px" src="' . asset('assets/images/verified.webp') . '" />';
+            return $this->firstname . ' ' . $this->surname . '<img style="width: 15px; margin-left: 5px; margin-top: 1px" src="' . asset('assets/images/verified.webp') . '" />';
         else
             return $this->firstname . ' ' . $this->surname;
     }

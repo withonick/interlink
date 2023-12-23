@@ -34,7 +34,6 @@
                     <input type="file" name="story" id="story_upload_input">
                     <button>Go</button>
                 </form>
-
                 <a id="auth-stories"><img style="border: 3px solid {{ Auth::user()->story ? 'var(--background-color); backdrop-filter:brightness(40%)' : 'var(--secondary-color)' }}" @if(!Auth::user()->story) id="story_upload_btn" @endif src="{{ Auth::user()->story ? Auth::user()->avatar : asset('assets/images/profile.png') }}" alt=""></a>
                 <span id="story_created_date"
                       style="font-size: 14px; font-weight: 500; margin-top: 5px;">Ваша история</span>

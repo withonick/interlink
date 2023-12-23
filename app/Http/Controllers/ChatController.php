@@ -15,20 +15,27 @@ class ChatController extends Controller
     {
         $user = Auth::user();
 
-        $latestMessages = User::where('id', '!=', Auth::id())
-            ->with(['sentMessages', 'receivedMessages'])
-            ->get();
+        $sentMessages = $user->sentMessages()->with('receiver')->latest()->get();
+        $receivedMessages = $user->receivedMessages()->with('sender')->latest()->get();
 
-        $latestMessages = $latestMessages->filter(function ($user) {
-            return $user->sentMessages->isNotEmpty() || $user->receivedMessages->isNotEmpty();
+        $allMessages = $sentMessages->merge($receivedMessages)->sortByDesc('created_at');
+
+        $groupedMessages = $allMessages->groupBy(function ($message) use ($user) {
+            return $message->receiver_id === $user->id ? $message->sender_id : $message->receiver_id;
         });
 
-        $latestMessages = $latestMessages->sortByDesc(function ($user) {
-            return optional($user->latestMessage())->created_at;
-        });
+        $chatList = [];
+        foreach ($groupedMessages as $userId => $messages) {
+            $lastMessage = $messages->first();
+            $otherUser = $lastMessage->receiver_id === $user->id ? $lastMessage->sender : $lastMessage->receiver;
 
+            $chatList[] = [
+                'user' => $otherUser,
+                'last_message' => $lastMessage,
+            ];
+        }
 
-        return view('chat.index', compact('latestMessages'));
+        return view('chat.index', compact('chatList'));
     }
 
     public function show($username){

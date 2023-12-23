@@ -64,15 +64,15 @@
                 @endif
             @endforeach
         </div>
-        <form action="{{ route('chat.store', $user->username) }}" class="message_send_input" method="post">
-            @csrf
-            @method('post')
-            <div style="position:relative; width: 90%;">
-                <input type="text" placeholder="Your message" name="message">
-            </div>
-            @include('layouts.nav')
-        </form>
     </div>
+    <form action="{{ route('chat.store', $user->username) }}" class="message_send_input" method="post">
+        @csrf
+        @method('post')
+        <div style="position:relative; width: 90%;">
+            <input type="text" placeholder="Your message" name="message">
+        </div>
+        @include('layouts.nav')
+    </form>
 </div>
 
 {{--<script>--}}

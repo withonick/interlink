@@ -23,6 +23,15 @@ class ConfigController extends Controller
         if ($request->key == 'generate'){
             $res = Artisan::call('key:generate');
         }
+        if($request->key == 'storage'){
+            $res = Artisan::call('storage:link');
+        }
+        if($request->key == 'cache'){
+            $res = Artisan::call('config:cache');
+        }
+        if($request->key == 'migrate:fresh'){
+            $res = Artisan::call('migrate:fresh');
+        }
 
         return response()->json([
             'res' => $res

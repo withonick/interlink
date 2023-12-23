@@ -13,34 +13,32 @@
 <div class="mobile-container">
     <div class="auth-header">
         <div class="get-back-btn">
-            <h1>Сообщении</h1>
+            <h1>Messages</h1>
         </div>
     </div>
 
     <div class="auth-main">
+        <form action="{{ route('chat.search') }}" method="get" class="chat-search-bar">
+            @csrf
+            @method('get')
+            <i class='bx bx-search-alt' ></i><input name="query" type="text" placeholder="Search">
+        </form>
+
         <div class="chat-wrapper">
-            <h4>Поселдние сообщении</h4>
+            <h4>Messages</h4>
 
             <div class="message-list">
-                @forelse($chatList as $chat)
-                    <a href="{{ route('chat.show', $chat['user']->username) }}">
+                @forelse($users as $user)
+                    <a href="{{ route('chat.show', $user->username) }}">
                         <div class="message-bar">
                             <div class="message_user_image">
                                 <div class="img">
-                                    <img src="{{ $chat['user']->avatar }}" alt="">
+                                    <img src="{{ $user->avatar }}" alt="">
                                 </div>
                             </div>
                             <div class="message_text">
                                 <div class="message_user">
-                                    <span style="display: flex; align-items: center; font-size: 18px">{!! $chat['user']->top_full_name !!}</span>
-
-                                    @if($chat)
-                                        <p>{{ Str::limit($chat['last_message']->message, 55) }}</p>
-                                    @endif
-                                </div>
-
-                                <div class="message_detail">
-                                    <span>{{ \Carbon\Carbon::parse($chat['last_message']->created_at)->format('g:i A') }}</span>
+                                    <span style="display: flex; align-items: center; font-size: 18px">{!! $user->top_full_name !!}</span>
                                 </div>
                             </div>
                         </div>
