@@ -31,9 +31,11 @@
                 <div class="settings-item__content__item">
                     <a href="{{ route('user.verifications', $user->username) }}">Запросить подтверждение</a>
                 </div>
-                <div class="settings-item__content__item">
-                    <a href="#">Выйти с аккаунта</a>
-                </div>
+                <form action="{{ route('logout') }}" method="post" class="settings-item__content__item">
+                    @csrf
+                    @method('post')
+                    <button style="background: transparent; border: none" href="#"><a >Выйти с аккаунта</a></button>
+                </form>
             </div>
         </div>
     </div>

@@ -15,7 +15,13 @@
 
 </head>
 <body>
-<div class="mobile-container text-center">
+<div id="preloader">
+    <div id="loader">
+        <img id="likeDislikeImage" alt="">
+    </div>
+</div>
+
+<div class="mobile-container text-center" id="main-content">
     <div class="mobile-container" >
         <div class="auth-header" style="position:sticky;">
             <div class="get-back-btn">
@@ -49,7 +55,7 @@
                             <form action="{{ route('dislike', $user->username) }}" method="post" class="dislike">
                                 @csrf
                                 @method('POST')
-                                <button id="dislike_btn" style="background-color: transparent; border: none"><i class='bx bx-x' style="color: #F27121"></i></button>
+                                <button id="dislikeBtn" style="background-color: transparent; border: none"><i class='bx bx-x' style="color: #F27121"></i></button>
                             </form>
                             <div class="chat-wrapper">
                                 <a href="{{ route('chat.show', $user->username) }}"><i class='bx bxl-telegram' style='color:#FFFFFF'  ></i></a>
@@ -57,7 +63,7 @@
                             <form action="{{ route('like', $user->username) }}" method="post" class="like">
                                 @csrf
                                 @method('POST')
-                                <button id="like_btn" style="background-color: transparent; border: none"><i class='bx bxs-heart' style="color: #8A2387"></i></button>
+                                <button id="likeBtn" style="background-color: transparent; border: none"><i class='bx bxs-heart' style="color: #8A2387"></i></button>
                             </form>
                         </div>
             @empty
@@ -206,5 +212,39 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var likeBtn = document.getElementById("likeBtn");
+        var dislikeBtn = document.getElementById("dislikeBtn");
+        var likeDislikeImage = document.getElementById("likeDislikeImage");
+        var preloader = document.getElementById("preloader");
+        var content = document.getElementById("main-content");
+
+        function handleButtonClick(button, imagePath) {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                // Устанавливаем изображение
+                likeDislikeImage.src = imagePath;
+
+                // Показываем анимацию
+                preloader.style.display = "flex";
+                content.style.display = "none";
+
+                // Ждем некоторое время (может потребоваться подстройка)
+                setTimeout(function () {
+                    // Отправляем форму
+                    button.closest("form").submit();
+                }, 1500);
+            });
+        }
+
+        handleButtonClick(likeBtn, "{{ asset('assets/images/heart-image.png') }}");
+        handleButtonClick(dislikeBtn, "{{ asset('assets/images/cancel-image.png') }}");
+    });
+
+</script>
+
 
 </html>

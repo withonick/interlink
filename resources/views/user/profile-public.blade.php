@@ -13,7 +13,7 @@
                 max-width: 700px;
                 margin: 0 auto;
                 height: 800px;
-                background-image: url({{ $user->getFirstMediaUrl('avatars') ?? asset('assets/images/avatar.jpg') }});
+                background-image: url({{ $user->avatar }});
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -21,12 +21,6 @@
                 position:relative;
 
          ">
-
-    <div class="auth-header" style="position:absolute; top: 50px;">
-        <div class="get-back-btn">
-            <a href="javascript:history.back()"><i class='bx bx-chevron-left' style="background-color: transparent; color: #FFFFFF"></i></a>
-        </div>
-    </div>
 
 </div>
 <div class="mobile-container" style="
@@ -44,27 +38,35 @@
             <div class="text-center">
                 <a style="float: right" href="#" ><i class='bx bxl-telegram' style='color:#e94057; font-size: 24px; padding: 10px; border: 1px solid var(--secondary-color); border-radius: 10px'  ></i></a>
 
-                <i class="text-center">{{ ($user->pronouns->pronouns_1 ?? '') . '/' . ($user->pronouns->pronouns_2 ?? '') }}</i>
+                @if($user->pronouns)
+                    <i class="text-center">{{ ($user->pronouns->pronouns_1 ?? '') . '/' . ($user->pronouns->pronouns_2 ?? '') }}</i>
+                @else
+                    <i class="text-center">Местоимение не указано</i>
+                @endif
             </div>
-            <h2 style="margin-top: 20px; display: flex; align-items: center">{!! $user->top_full_name !!}</h2>
-            <p style="font-weight: 500">{{ $user->status }}</p>
+            @if($user->firstname || $user->surname)
+                <h3 class="mt-2">{!! $user->top_full_name !!}</h3>
+            @else
+                <h3>Имя и фамилия не указано.</h3>
+            @endif
+            <p style="font-weight: 500">{{ $user->status ?? 'Пользователь еще не установил статус.' }}</p>
 
             <div class="mt-4">
-                <h2>Location</h2>
+                <h2>Адрес</h2>
                 <div class="mt-2">
-                    <span style="font-weight: 500">{{ $user->address->location ?? '' }}</span>
+                    <span style="font-weight: 500">{{ $user->address->location ?? 'Адрес не указан.' }}</span>
                 </div>
             </div>
 
             <div class="mt-4">
-                <h2>About</h2>
+                <h2>Про себя</h2>
                 <div class="mt-2">
-                    <p>{{ $user->bio }}</p>
+                    <p>{{ $user->bio ?? 'Пользователь еще не написал про себя.' }}</p>
                 </div>
             </div>
 
             <div class="mt-4">
-                <h2>Interests</h2>
+                <h2>Интересы</h2>
 
                 <div class="mt-2">
                     <div class="user-hobbies">
@@ -75,14 +77,14 @@
                                 <label class=""> {{ $hobby->name }}</label>
                             @endif
                         @empty
-                            <p style="width: 600px; font-weight: 500; font-size: 18px">Пользователь еще не добавил интересы.</p>
+                            <p style="width: 600px; font-weight: 500; font-size: 18px">Пользователь еще не выбрал интересы.</p>
                         @endforelse
                     </div>
                 </div>
             </div>
 
             <div class="mt-4">
-                <h2>Gallery</h2>
+                <h2>Галерея</h2>
 
                 <div>
                     <div class="user-gallery">

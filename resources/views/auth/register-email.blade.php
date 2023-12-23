@@ -21,30 +21,30 @@
     </div>
 
     <div class="auth-main">
-        <h1>Email</h1>
-        <p>Please enter your valid email. We will send you a link to verify your account. </p>
+        <h1>Регистрация.</h1>
+        <p>Пожалуйста, введите свой действительный адрес электронной почты.</p>
 
         <form action="{{ route('register.email.store') }}" method="post">
             @csrf
             @method('post')
             <div class="choice-wrapper">
                 <div class="number-input" style="margin-bottom: 20px">
-                    <i class='bx bxs-user'></i><input type="text" placeholder="Username" name="username">
+                    <i class='bx bxs-user'></i><input type="text" placeholder="Имя пользователя" name="username">
                 </div>
                 <div class="number-input" style="margin-bottom: 20px">
-                    <i class='bx bxs-envelope'></i><input type="email" placeholder="Email address" name="email">
+                    <i class='bx bxs-envelope'></i><input type="email" placeholder="Электронный адрес" name="email">
                 </div>
                 <div class="number-input">
-                    <i class='bx bxs-key' ></i><input type="password" placeholder="Password" name="password">
-                </div>
-
-                <div class="google-auth text-center continue mt-2" style="padding: 0; margin-top: 20px">
-                    <a href="{{ route('google_page') }}" class="btn" style="border: 1px solid var(--secondary-color); display: flex; align-items: center; gap: 10px; width: 400px;"><i class='bx bxl-google' style='color:#e94057; font-size: 24px'  ></i> Sign up with Google</a>
+                    <i class='bx bxs-key' ></i><input type="password" placeholder="Пароль" name="password">
                 </div>
             </div>
 
             <div class="continue">
-                <button type="submit" class="btn btn-primary">Continue</button>
+                <button type="submit" class="btn btn-primary">Продолжить</button>
+            </div>
+
+            <div class="continue">
+                <p>Уже есть аккаунт? <a style="color: var(--background-color)" href="{{ route('login.form') }}">Войти</a></p>
             </div>
         </form>
     </div>

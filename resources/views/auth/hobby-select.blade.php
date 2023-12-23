@@ -11,18 +11,14 @@
 <body>
 <div class="mobile-container">
     <div class="auth-header">
-        <div class="get-back-btn">
-            <i class='bx bx-chevron-left'></i>
-        </div>
-
         <div class="skip-btn">
-            <a href="{{ route('user.edit', $user->username) }}">Skip</a>
+            <a href="{{ route('user.edit', $user->username) }}">Пропустить</a>
         </div>
     </div>
 
     <div class="auth-main">
-        <h1>Your interests</h1>
-        <p>Select a few of your interests and let everyone know what you’re passionate about.</p>
+        <h1>Ваши интересы</h1>
+        <p>Выберите несколько своих интересов и расскажите всем, чем вы увлечены.</p>
 
         <form action="{{ route('register.hobbies.store') }}" method="post">
             @csrf
@@ -35,7 +31,7 @@
             </div>
 
             <div class="continue">
-                <button class="btn btn-primary">Continue</button>
+                <button class="btn btn-primary">Продолжить</button>
             </div>
         </form>
     </div>

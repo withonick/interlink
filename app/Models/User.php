@@ -102,7 +102,7 @@ class User extends Authenticatable implements hasMedia
     public function getAvatarAttribute(){
         $profilePicture = $this->getMedia('avatars')->first();
         if (!$profilePicture){
-            return '/img/avatar.jpg';
+            return asset('assets/images/avatar.jpg');
         }
         return $profilePicture->getUrl();
     }

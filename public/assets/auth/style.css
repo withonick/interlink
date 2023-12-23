@@ -1570,3 +1570,36 @@ i {
 .settings-item__content__item a:hover{
     color: var(--background-color);
 }
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: zoomInOut 1.5s infinite alternate; /* Анимация приближения и отдаления */
+}
+
+#loader {
+    width: 100px;
+    height: 100px;
+}
+
+#loader img {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes zoomInOut {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}

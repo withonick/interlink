@@ -4,41 +4,41 @@ namespace App\Enums;
 
 enum Country: string
 {
-    case KZ = 'Kazakhstan';
-    case RU = 'Russia';
-    case UA = 'Ukraine';
-    case BY = 'Belarus';
-    case KG = 'Kyrgyzstan';
-    case UZ = 'Uzbekistan';
-    case TJ = 'Tajikistan';
-    case TM = 'Turkmenistan';
-    case MD = 'Moldova';
-    case GE = 'Georgia';
-    case AM = 'Armenia';
-    case AZ = 'Azerbaijan';
-    case LV = 'Latvia';
-    case LT = 'Lithuania';
-    case EE = 'Estonia';
+    case Kazakhstan = 'Kazakhstan';
+    case Russia = 'Russia';
+    case Ukraine = 'Ukraine';
+    case Belarus = 'Belarus';
+    case Kyrgyzstan = 'Kyrgyzstan';
+    case Uzbekistan = 'Uzbekistan';
+    case Tajikistan = 'Tajikistan';
+    case Turkmenistan = 'Turkmenistan';
+    case Moldova = 'Moldova';
+    case Georgia = 'Georgia';
+    case Armenia = 'Armenia';
+    case Azerbaijan = 'Azerbaijan';
+    case Latvia = 'Latvia';
+    case Lithuania = 'Lithuania';
+    case Estonia = 'Estonia';
 
 
     public static function getCountryList(): array
     {
         return [
-            self::KZ,
-            self::RU,
-            self::UA,
-            self::BY,
-            self::KG,
-            self::UZ,
-            self::TJ,
-            self::TM,
-            self::MD,
-            self::GE,
-            self::AM,
-            self::AZ,
-            self::LV,
-            self::LT,
-            self::EE,
+            'Kazakhstan' => 'Kazakhstan',
+            'Russia' => 'Russia',
+            'Ukraine' => 'Ukraine',
+            'Belarus' => 'Belarus',
+            'Kyrgyzstan' => 'Kyrgyzstan',
+            'Uzbekistan' => 'Uzbekistan',
+            'Tajikistan' => 'Tajikistan',
+            'Turkmenistan' => 'Turkmenistan',
+            'Moldova' => 'Moldova',
+            'Georgia' => 'Georgia',
+            'Armenia' => 'Armenia',
+            'Azerbaijan' => 'Azerbaijan',
+            'Latvia' => 'Latvia',
+            'Lithuania' => 'Lithuania',
+            'Estonia' => 'Estonia',
         ];
     }
 

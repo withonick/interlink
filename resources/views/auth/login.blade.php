@@ -11,8 +11,8 @@
 <body>
 <div class="mobile-container">
     <div class="auth-main">
-        <h1>Welcome back</h1>
-        <p style="font-weight: 500">Please enter your username and password</p>
+        <h1>Добро пожаловать.</h1>
+        <p style="font-weight: 500">Пожалуйста введите свой логин и пароль.</p>
 
         <form action="{{ route('login') }}" method="post">
             @csrf
@@ -27,7 +27,11 @@
             </div>
 
             <div class="continue">
-                <button type="submit" class="btn btn-primary">Continue</button>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </div>
+
+            <div class="continue">
+                <p>Нет аккаунта? <a style="color: var(--background-color)" href="{{ route('register.form') }}">Зарегистрироваться</a></p>
             </div>
         </form>
     </div>
