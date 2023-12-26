@@ -28,13 +28,13 @@
 
         <div class="stories-list">
             <div class="stories-item">
-                <form action="{{ route('stories.store') }}" style="display: none" method="post"  enctype="multipart/form-data">
+                <form action="{{ route('stories.store') }}" method="post" style="display: none" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <input type="file" name="story" id="story_upload_input">
                     <button>Go</button>
                 </form>
-                <a id="auth-stories"><img style="border: 3px solid {{ Auth::user()->story ? 'var(--background-color); backdrop-filter:brightness(40%)' : 'var(--secondary-color)' }}" @if(!Auth::user()->story) id="story_upload_btn" @endif src="{{ Auth::user()->story ? Auth::user()->avatar : asset('assets/images/profile.png') }}" alt=""></a>
+                <a id="auth-stories"><img style="border: 3px solid {{ Auth::user()->story ? 'var(--background-color); backdrop-filter:brightness(40%)' : 'var(--secondary-color)' }}" @if(!Auth::user()->story) id="story_upload_btn" @endif src="{{ Auth::user()->avatar }}" alt=""></a>
                 <span id="story_created_date"
                       style="font-size: 14px; font-weight: 500; margin-top: 5px;">Ваша история</span>
             </div>
@@ -110,7 +110,7 @@
                         <div class="matched_user_wrapper">
                             <img src="{{ $user->avatar }}" alt="">
                             <div class="matched_user_info">
-                                <a href="{{ route('users.show', $user->username) }}">{{ $user->fullname . ', ' . $user->age }}</a>
+                                <a href="{{ route('user.show', $user->username) }}">{{ $user->fullname . ', ' . $user->age }}</a>
                             </div>
                             <div class="matched_user_actions">
                                 <form action="{{ route('matches.delete', $user->username) }}" method="post"
@@ -144,7 +144,7 @@
 
     var timerDuration = 5000;
 
-    var open_modal = document.getElementById('open-stories');
+    var open_modal = document.querySelector('#open-stories');
     var modal = document.getElementById('stories-modal');
     var timerLine = document.querySelector('.stories-timer__line');
     var close_modal = document.querySelector('.modal__close');

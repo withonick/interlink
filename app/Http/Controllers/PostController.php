@@ -62,6 +62,8 @@ class PostController extends Controller
             'body' => 'required|string|max:255',
         ]);
 
+        $post->update($validated);
+
         if ($request->image){
             $post->clearMediaCollection('post_images');
             $post->addMediaFromRequest('image')
