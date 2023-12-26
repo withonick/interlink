@@ -110,7 +110,7 @@
                         <div class="matched_user_wrapper">
                             <img src="{{ $user->avatar }}" alt="">
                             <div class="matched_user_info">
-                                <span>{{ $user->fullname . ', ' . $user->age }}</span>
+                                <a href="{{ route('users.show', $user->username) }}">{{ $user->fullname . ', ' . $user->age }}</a>
                             </div>
                             <div class="matched_user_actions">
                                 <form action="{{ route('matches.delete', $user->username) }}" method="post"

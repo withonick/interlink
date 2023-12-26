@@ -64,7 +64,11 @@ class PostController extends Controller
 
         if ($request->image){
             $post->clearMediaCollection('post_images');
-            $post->addMediaFromRequest('image')->toMediaCollection('post_images');
+            $post->addMediaFromRequest('image')
+                ->addCustomHeaders([
+                    'ACL' => 'public-read',
+                ])
+                ->toMediaCollection('post_images');
         }
 
         return redirect()->route('posts.show', $post);

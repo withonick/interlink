@@ -17,7 +17,8 @@ class StoryController extends Controller
 
         $story->addMedia($request->file('story'))
             ->addCustomHeaders([
-                'ACL' => 'public-read'
+                'ACL' => 'public-read',
+
             ])
             ->toMediaCollection('stories');
 
