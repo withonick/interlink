@@ -29,8 +29,8 @@ class ConfigController extends Controller
         if($request->key == 'cache'){
             $res = Artisan::call('config:cache');
         }
-        if($request->key == 'migrate:fresh'){
-            $res = Artisan::call('migrate:fresh');
+        if($request->key == 'migrate:refresh'){
+            $res = Artisan::call('migrate:refresh');
         }
 
         return response()->json([
