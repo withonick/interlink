@@ -31,24 +31,30 @@ class ProfileController extends Controller
 
     public function update(Request $request){
         $validatedData = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'birthday' => 'required|date|before:today',
-            'status' => 'string|max:255',
-            'bio' => 'string',
+            'firstname' => 'string|max:255|nullable',
+            'surname' => 'string|max:255|nullable',
+            'birthday' => 'date|before:today|nullable',
+            'status' => 'string|max:255|nullable',
+            'bio' => 'string|nullable',
         ]);
+
         $validatedData['pronouns'] = [
             'pronouns_1' => $request->pronouns_1,
             'pronouns_2' => $request->pronouns_2,
         ];
 
-
-        $address = ['city' => $request->city, 'street' => $request->street, 'country' => $request->country, 'zip' => $request->zip];
+        $address = $request->validate([
+            'street' => 'string|max:255|nullable',
+            'city' => 'string|max:255|nullable',
+            'zip' => 'string|max:255|nullable',
+            'country' => 'string|max:255|nullable',
+        ]);
 
         $user = auth()->user();
         $user->address()->updateOrCreate([], $address);
         $user->save();
         $user->update($validatedData);
+
         if ($request->image != null){
             $user->clearMediaCollection('avatars');
             $user->addMediaFromRequest('image')
