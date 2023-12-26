@@ -103,6 +103,15 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::get('/events/{event}', [EventController::class, 'show'])
         ->name('events.show');
 
+    Route::post('/events/{event}/images', [EventController::class, 'storeImages'])
+        ->name('events.images.store');
+
+    Route::delete('/events/{event}/images/{image}', [EventController::class, 'deleteImage'])
+        ->name('events.images.delete');
+
+    Route::post('/events/{event}/join', [EventController::class, 'join'])
+        ->name('events.join');
+
     Route::get('/search', [HomeController::class, 'search'])
         ->name('search.user');
 

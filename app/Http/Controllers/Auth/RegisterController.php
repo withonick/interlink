@@ -27,7 +27,7 @@ class RegisterController extends Controller
     }
 
     public function email(){
-        return view('auth.login-email');
+        return view('auth.register-email');
     }
 
     public function gender(){

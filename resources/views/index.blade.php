@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 @extends('layouts.head')
-
 <body>
 <div id="preloader">
     <div id="loader">
@@ -27,14 +26,14 @@
 
         <div class="main-content">
                 @forelse($users as $user)
-                    <a href="{{ route('user.show', $user->username) }}">
+                <a href="{{ route('user.show', $user->username) }}">
                         <div class="user-image">
-                            <img id="slider_1" src="{{ $user->getFirstMediaUrl('avatars') }}" alt="">
+                            <img id="slider_1" src="{{ $user->avatar }}" alt="">
                             <div style="display: flex; align-items: center">
-                                <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city ?? '' }}</span>
+                                <span class="distance-len"><i class='bx bxs-location-plus' style='color:#ffffff'  ></i>{{ $user->address->city ?? 'Адрес не указан' }}</span>
                             </div>
                             <div class="user-image-info" >
-                                <h3 style="color: #fff; display: flex; align-items: center; justify-content: center">{!! $user->top_full_name . ', ' . $user->age !!}</h3>
+                                <h3 style="color: #fff; display: flex; align-items: center; justify-content: center">@if($user->firstname || $user->surname) {!! $user->top_full_name !!}@else {{ $user->username }} @endif @if($user->age <= 0) @else {{ $user->age }} @endif</h3>
                                 <span style="color: #fff">{{ $user->profession }}</span>
                             </div>
                         </div>

@@ -148,9 +148,9 @@ class User extends Authenticatable implements hasMedia
     }
 
     public function events(){
-        return $this->hasMany(Event::class);
+        return $this->belongsToMany(Event::class, 'event_members', 'user_id', 'event_id')
+            ->withTimestamps();
     }
-
     public function matches(){
         return $this->belongsToMany(User::class, 'matches', 'user_id', 'matched_user_id')
             ->withTimestamps();

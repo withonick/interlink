@@ -119,6 +119,24 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="mt-4">
+                <h2>Ивенты</h2>
+
+                <div>
+                    <div class="user-gallery">
+                        @forelse($events as $event)
+                            <div class="mt-2">
+                                <a href="{{ $event->avatar }}"><img src="{{ $event->avatar }}" alt=""></a>
+                                <a style="font-weight: 600" href="{{ route('events.show', $event) }}">{{ $event->name }}</a>
+                            </div>
+                        @empty
+                            <p style="width: 600px; font-weight: 500; font-size: 18px">Вы еще не участвуете ни в каком ивенте.</p>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
         </div>
 {{--        <a href="#" style="float: right"><i class='bx bxl-telegram' style='color:#e94057; border: 1px solid #F3F3F3; font-size: 24px; padding: 15px; border-radius: 10px; margin-top: 10px;'  ></i></a>--}}
     </div>

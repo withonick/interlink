@@ -36,4 +36,18 @@ class Event extends Model implements HasMedia
     public function getAvatarAttribute(){
         return $this->getFirstMediaUrl('event_avatars');
     }
+
+    public function getGalleryAttribute(){
+        return $this->getMedia('event_gallery');
+    }
+
+    public function users(){
+        return $this->belongsToMany(User::class, 'event_members', 'event_id', 'user_id')
+            ->withTimestamps();
+    }
+
+    public function countEventMembers()
+    {
+        return $this->users()->count();
+    }
 }

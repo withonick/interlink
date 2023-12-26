@@ -29,7 +29,7 @@
                             <img src="{{ $event->avatar }}" alt="">
                             <div class="matched_user_actions" style="display: flex; justify-content: space-between; align-items: center">
                                 <a href="{{ route('events.show', $event) }}" style="color: #fff; font-size: 20px; font-weight: bold; margin: 0 10px;">{{ $event->name }}</a>
-                                <small style="margin: 15px; color: #fff; font-weight: bold">0/{{ $event->members }}</small>
+                                <small style="margin: 15px; color: #fff; font-weight: bold">{{ $event->countEventMembers() . '/' . $event->members }}</small>
                             </div>
                         </div>
                     @endforeach

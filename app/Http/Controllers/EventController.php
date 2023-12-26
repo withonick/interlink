@@ -35,4 +35,32 @@ class EventController extends Controller
 
         return redirect()->route('events.index');
     }
+
+    public function storeImages(Request $request, Event $event){
+        foreach ($request->images as $image){
+            $event->addMedia($image)
+                ->addCustomHeaders([
+                    'ACL' => 'public-read'
+                ])
+                ->toMediaCollection('event_gallery');
+        }
+
+        return redirect()->route('events.show', ['event' => $event]);
+    }
+
+    public function deleteImage(Event $event, $image){
+        $image = $event->getMedia('event_gallery')->where('id', $image)->first();
+        $event->deleteMedia($image);
+        return back();
+    }
+
+    public function join(Event $event){
+        if ($event->users()->where('user_id', auth()->id())->exists()){
+            $event->users()->detach(auth()->id());
+        }else{
+            $event->users()->attach(auth()->id());
+        }
+        return back();
+    }
+
 }

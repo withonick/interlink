@@ -14,10 +14,11 @@ class ProfileController extends Controller
         $user = User::where('username', $username)->firstOrFail();
         $posts = $user->posts()->orderBy('created_at', 'desc')->get();
         $hobbies = $user->hobbies()->orderBy('name')->get();
+        $events = $user->events()->orderBy('date')->get();
         if(Auth::check() and Auth::user()->username === $username) {
-            return view('user.profile', compact('user', 'hobbies', 'posts'));
+            return view('user.profile', compact('user', 'hobbies', 'posts', 'events'));
         }
-        return view('user.profile-public', compact('user', 'hobbies', 'posts'));
+        return view('user.profile-public', compact('user', 'hobbies', 'posts', 'events'));
     }
 
     public function edit($username){

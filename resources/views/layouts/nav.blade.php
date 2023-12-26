@@ -7,4 +7,3 @@
     <a href="{{ route('chat.index') }}"><i class='bx bx-message-square-dots {{ request()->is('chat*') ? 'active' : '' }}'></i></a>
     <a href="{{ route('user.show', Auth::user()->username) }}"><i class='bx bxs-user {{ request()->is('profile*') ? 'active' : '' }}'></i></a>
 </div>
-
