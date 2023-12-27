@@ -107,31 +107,6 @@ class User extends Authenticatable implements hasMedia
         return $profilePicture->getUrl();
     }
 
-    public function sentMessages()
-    {
-        return $this->hasMany(Messenger::class, 'sender_id', 'id');
-    }
-
-    public function receivedMessages()
-    {
-        return $this->hasMany(Messenger::class, 'receiver_id', 'id');
-    }
-
-    public function latestMessage()
-    {
-        return $this->sentMessages->merge($this->receivedMessages)->sortByDesc('created_at')->first();
-    }
-
-    public function getUnreadMessagesCount(){
-        $count = 0;
-        foreach ($this->messageReceiver as $message){
-            if (!$message->pivot->read){
-                $count++;
-            }
-        }
-        return $count;
-    }
-
     public function likedUsers(){
         return $this->belongsToMany(User::class, 'user_liked', 'user_id', 'liked_user_id')
             ->withTimestamps();
@@ -189,4 +164,33 @@ class User extends Authenticatable implements hasMedia
     public function verification(){
         return $this->hasOne(Verification::class);
     }
+
+    // User.php
+
+    public function allMessages()
+    {
+        return $this->sentMessages->merge($this->receivedMessages);
+    }
+
+    public function latestMessageWithUser($userId)
+    {
+        return $this->allMessages()
+            ->filter(function ($message) use ($userId) {
+                return ($message->sender_id == $userId || $message->receiver_id == $userId);
+            })
+            ->sortByDesc('created_at')
+            ->first();
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Messenger::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Messenger::class, 'receiver_id');
+    }
+
+
 }

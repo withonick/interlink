@@ -15,29 +15,34 @@
             <h4>Поселдние сообщении</h4>
 
             <div class="message-list">
-                @forelse($chatList as $chat)
-                    <a href="{{ route('chat.show', $chat['user']->username) }}">
+                @forelse($usersWithLastMessages as $user)
+                    @php
+                        $user = $user['user'];
+                    @endphp
+                    @if ($user->id !== auth()->id())
+                    <a href="{{ route('chat.show', $user->username) }}">
                         <div class="message-bar">
                             <div class="message_user_image">
                                 <div class="img">
-                                    <img src="{{ $chat['user']->avatar }}" alt="">
+                                    <img src="{{ $user->avatar }}" alt="">
                                 </div>
                             </div>
                             <div class="message_text">
                                 <div class="message_user">
-                                    <span style="display: flex; align-items: center; font-size: 18px">{!! $chat['user']->top_full_name !!}</span>
+                                    <span style="display: flex; align-items: center; font-size: 18px">{!! $user->top_full_name !!}</span>
 
-                                    @if($chat)
-                                        <p>{{ Str::limit($chat['last_message']->message, 55) }}</p>
+                                    @if ($user->latestMessageWithUser($user->id))
+                                    <p>{{ Str::limit($user->latestMessageWithUser($user->id)->message, 55) }}</p>
                                     @endif
                                 </div>
 
                                 <div class="message_detail">
-                                    <span>{{ \Carbon\Carbon::parse($chat['last_message']->created_at)->format('g:i A') }}</span>
+                                    <span>{{ \Carbon\Carbon::parse($user->latestMessageWithUser($user->id)->created_at)->format('g:i A') }}</span>
                                 </div>
                             </div>
                         </div>
                     </a>
+                    @endif
                 @empty
                     <p style="font-size: 20px; font-weight: 500">Еще нет сообщений.</p>
                 @endforelse
