@@ -85,7 +85,7 @@ Route::middleware(['auth', 'registration_completed'])->group(function(){
     Route::post('/matches/{username}', [HomeController::class, 'matchAccept'])
         ->name('matches.accept');
 
-    Route::delete('/matches/{username}', [HomeController::class, 'matchDelete'])
+    Route::delete('/matches/{username}/delete', [HomeController::class, 'matchDelete'])
         ->name('matches.delete');
 
     Route::get('/matches/{username}', [HomeController::class, 'matchDone'])

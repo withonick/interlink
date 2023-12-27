@@ -2,6 +2,54 @@
 <html lang="en">
 @extends('layouts.head')
 
+<style>
+    .modal {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(77, 77, 77, .7);
+        transition: all .4s;
+    }
+
+    .modal:target {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .modal__content {
+        border-radius: 4px;
+        position: relative;
+        width: 500px;
+        max-width: 90%;
+        background: #fff;
+        padding: 1em 2em;
+    }
+
+    .modal__footer {
+        text-align: right;
+        a {
+            color: #585858;
+        }
+        i {
+            color: #d02d2c;
+        }
+    }
+    .modal__close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #585858;
+        text-decoration: none;
+    }
+</style>
+
 <body>
 <div class="mobile-container">
     <div class="auth-header">
@@ -21,13 +69,7 @@
 
         <div class="stories-list">
             <div class="stories-item">
-                <form action="{{ route('stories.store') }}" method="post" style="display: none" enctype="multipart/form-data">
-                    @csrf
-                    @method('POST')
-                    <input type="file" name="story" id="story_upload_input">
-                    <button>Go</button>
-                </form>
-                <a id="auth-stories"><img style="border: 3px solid {{ Auth::user()->story ? 'var(--background-color); backdrop-filter:brightness(40%)' : 'var(--secondary-color)' }}" @if(!Auth::user()->story) id="story_upload_btn" @endif src="{{ Auth::user()->avatar }}" alt=""></a>
+                <a href="#add_status" id="auth-stories"><img style="border: 3px solid {{ Auth::user()->story ? 'var(--background-color); backdrop-filter:brightness(40%)' : 'var(--secondary-color)' }}" @if(!Auth::user()->story) id="story_upload_btn" @endif src="{{ Auth::user()->avatar }}" alt=""></a>
                 <span id="story_created_date"
                       style="font-size: 14px; font-weight: 500; margin-top: 5px;">Ваша история</span>
             </div>
@@ -109,11 +151,11 @@
                                 <form action="{{ route('matches.delete', $user->username) }}" method="post"
                                       class="matched_user_action">
                                     @csrf
-                                    @method('POST')
-                                    <button style="background-color: transparent; border: none;"><i class='bx bx-x'
-                                                                                                    style="color: #FFFFFF; font-weight: bold; font-size: 35px"></i>
+                                    @method('DELETE')
+                                    <button style="background-color: transparent; border: none;"><i class='bx bx-x' style="color: #FFFFFF; font-weight: bold; font-size: 35px"></i>
                                     </button>
                                 </form>
+
                                 <form action="{{ route('matches.accept', $user->username) }}" method="post"
                                       class="matched_user_action" style="border: none">
                                     @csrf
@@ -173,6 +215,34 @@
     });
 
 </script>
+
+<div id="add_status" class="modal">
+    <div class="modal__content">
+        <h1>Дополнить историю</h1>
+
+        <p>
+        <form action="{{ route('stories.store') }}" style="display: flex; justify-content: center; margin-top: 20px; gap: 10px" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('POST')
+            <input style="display: none" type="file" name="story" id="story_upload_input">
+            <label for="story_upload_input" class="btn btn-secondary">Выбрать изображение</label>
+            <button class="btn btn-primary">Добавить</button>
+        </form>
+        </p>
+
+        <script>
+            const storyUploadBtn = document.getElementById('story_upload_btn');
+            const storyUploadInput = document.getElementById('story_upload_input');
+
+            storyUploadBtn.addEventListener('click', () => {
+                storyUploadInput.click();
+            });
+        </script>
+
+        <a href="#" class="modal__close">&times;</a>
+    </div>
+</div>
+
 <script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

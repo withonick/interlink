@@ -8,10 +8,10 @@
     <div class="match-main">
         <div class="match_user_images">
             <div class="img">
-                <img src="{{ $match->getFirstMediaUrl('avatars') }}" alt="">
+                <img src="{{ $match->avatar }}" alt="">
             </div>
             <div class="img-2">
-                <img src="{{ Auth::user()->getFirstMediaUrl('avatars') }}" alt="">
+                <img src="{{ Auth::user()->avatar }}" alt="">
             </div>
         </div>
 

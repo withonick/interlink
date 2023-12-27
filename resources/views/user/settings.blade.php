@@ -20,9 +20,6 @@
                     <a href="{{ route('user.edit', $user->username) }}">Редактировать профиль</a>
                 </div>
                 <div class="settings-item__content__item">
-                    <a href="#">Язык приложения</a>
-                </div>
-                <div class="settings-item__content__item">
                     <a href="{{ route('user.verifications', $user->username) }}">Запросить подтверждение</a>
                 </div>
                 <form action="{{ route('logout') }}" method="post" class="settings-item__content__item">
